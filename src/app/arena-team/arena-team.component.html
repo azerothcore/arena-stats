@@ -1,0 +1,88 @@
+<div>
+  <tabset>
+    <tab heading="2v2" id="2v2">
+      <div class="table-responsive">
+        <table class="table table-striped table-bordered table-condensed">
+          <thead>
+            <th class="text-center">Rank</th>
+            <th class="text-center">Name</th>
+            <th class="text-center">Captain</th>
+            <th class="text-center">Rating</th>
+            <th class="text-center">Season Games</th>
+            <th class="text-center">Season Wins</th>
+            <th class="text-center">Week Games</th>
+            <th class="text-center">Week Wins</th>	
+          </thead>
+          <tbody>
+            <tr *ngFor="let team of service.teams2$ | async" [ngClass]="team.faction" (click)="service.showTeam(team.arenaTeamId)">
+              <td><strong>{{ team.rank }}</strong></td>
+              <td><strong>{{ team.name }}</strong></td>
+              <td><strong>{{ team.captainName }}</strong></td>
+              <td><strong>{{ team.rating }}</strong></td>
+              <td><strong>{{ team.seasonGames }}</strong></td>
+              <td><strong>{{ team.seasonWins }}</strong> &nbsp; ({{ team.seasonGames == 0 ? 0 : team.seasonWins / team.seasonGames * 100 | number:0 }}%)</td>
+              <td><strong>{{ team.weekGames }}</strong></td>
+              <td><strong>{{ team.weekWins }}</strong> &nbsp; ({{ team.weekGames == 0 ? 0 : team.weekWins / team.weekGames * 100 | number:0 }}%)</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </tab>
+    <tab heading="3v3">
+      <div class="table-responsive">
+        <table class="table table-striped table-bordered table-condensed">
+          <thead>
+            <th class="text-center">Rank</th>
+            <th class="text-center">Name</th>
+            <th class="text-center">Captain</th>
+            <th class="text-center">Rating</th>
+            <th class="text-center">Season Games</th>
+            <th class="text-center">Season Wins</th>
+            <th class="text-center">Week Games</th>
+            <th class="text-center">Week Wins</th>	
+          </thead>
+          <tbody>
+            <tr *ngFor="let team of service.teams3$ | async" [ngClass]="team.faction" (click)="service.showTeam(team.arenaTeamId)">
+              <td><strong>{{ team.rank }}</strong></td>
+              <td><strong>{{ team.name }}</strong></td>
+              <td><strong>{{ team.captainName }}</strong></td>
+              <td><strong>{{ team.rating }}</strong></td>
+              <td><strong>{{ team.seasonGames }}</strong></td>
+              <td><strong>{{ team.seasonWins }}</strong> &nbsp; ({{ team.seasonGames == 0 ? 0 : team.seasonWins / team.seasonGames * 100 | number:0 }}%)</td>
+              <td><strong>{{ team.weekGames }}</strong></td>
+              <td><strong>{{ team.weekWins }}</strong> &nbsp; ({{ team.weekGames == 0 ? 0 : team.weekWins / team.weekGames * 100 | number:0 }}%)</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </tab>
+    <tab heading="5v5">
+      <div class="table-responsive">
+        <table class="table table-striped table-bordered table-condensed">
+          <thead>
+            <th class="text-center">Rank</th>
+            <th class="text-center">Name</th>
+            <th class="text-center">Captain</th>
+            <th class="text-center">Rating</th>
+            <th class="text-center">Season Games</th>
+            <th class="text-center">Season Wins</th>
+            <th class="text-center">Week Games</th>
+            <th class="text-center">Week Wins</th>	
+          </thead>
+          <tbody>
+            <tr *ngFor="let team of service.teams5$ | async" [ngClass]="team.faction" (click)="service.showTeam(team.arenaTeamId)">
+              <td><strong>{{ team.rank }}</strong></td>
+              <td><strong>{{ team.name }}</strong></td>
+              <td><strong>{{ team.captainName }}</strong></td>
+              <td><strong>{{ team.rating }}</strong></td>
+              <td><strong>{{ team.seasonGames }}</strong></td>
+              <td><strong>{{ team.seasonWins }}</strong> &nbsp; ({{ team.seasonGames == 0 ? 0 : team.seasonWins / team.seasonGames * 100 | number:0 }}%)</td>
+              <td><strong>{{ team.weekGames }}</strong></td>
+              <td><strong>{{ team.weekWins }}</strong> &nbsp; ({{ team.weekGames == 0 ? 0 : team.weekWins / team.weekGames * 100 | number:0 }}%)</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </tab>
+  </tabset>
+</div>

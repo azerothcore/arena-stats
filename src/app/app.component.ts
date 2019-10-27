@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { AppService } from './app.service';
+import { SERVER_NAME } from 'config';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +8,7 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'arena-stats';
+  constructor(public service: AppService) { }
+
+  public readonly serverName = SERVER_NAME;
 }

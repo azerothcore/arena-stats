@@ -13,8 +13,11 @@ import { ArenaTeam } from '../types/arena-team.type';
 })
 export class ArenaTeamMemberService {
 
-  teamDetails$: Observable<ArenaTeam>;
-  members$: Observable<ArenaTeamMember[]>;
+  get teamDetails$() { return this._teamDetails$; }
+  get members$()     { return this._members$;     }
+
+  private _teamDetails$: Observable<ArenaTeam>;
+  private _members$: Observable<ArenaTeamMember[]>;
   private arenaTeamId: number;
 
   constructor(private http: HttpClient,
@@ -26,7 +29,7 @@ export class ArenaTeamMemberService {
 
   private loadTeamDetail(): void {
 
-    this.teamDetails$ = this.http.get<ArenaTeam[]>(API_URL + '/characters/arena_team/id/' + this.arenaTeamId)
+    this._teamDetails$ = this.http.get<ArenaTeam[]>(API_URL + '/characters/arena_team/id/' + this.arenaTeamId)
       .pipe(
         map((data: ArenaTeam[]) => {
 
@@ -41,7 +44,7 @@ export class ArenaTeamMemberService {
 
   private loadTeamMemberDetail(): void {
 
-    this.members$ = this.http.get<ArenaTeamMember[]>(API_URL + '/characters/arena_team_member/' + this.arenaTeamId)
+    this._members$ = this.http.get<ArenaTeamMember[]>(API_URL + '/characters/arena_team_member/' + this.arenaTeamId)
       .pipe(
         map((data: ArenaTeamMember[]) => {
 

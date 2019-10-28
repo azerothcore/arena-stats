@@ -10,7 +10,9 @@ import { map } from 'rxjs/operators';
 })
 export class AppService {
 
-  nextArenaPointsDistributionTime$: Observable<number> = this.http
+  get nextArenaPointsDistributionTime$() { return this._nextArenaPointsDistributionTime$; }
+
+  private _nextArenaPointsDistributionTime$: Observable<number> = this.http
     .get<Worldstate[]>(API_URL + '/characters/search/worldstates?comment=NextArenaPointDistributionTime')
     .pipe(
       map(data => data[0].value)

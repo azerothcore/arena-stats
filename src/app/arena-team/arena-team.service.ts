@@ -12,9 +12,13 @@ import { map } from 'rxjs/operators';
 })
 export class ArenaTeamService {
 
-  teams2$: Observable<ArenaTeam[]> = this.assignTeamData(2);
-  teams3$: Observable<ArenaTeam[]> = this.assignTeamData(3);
-  teams5$: Observable<ArenaTeam[]> = this.assignTeamData(5);
+  get teams2$() { return this._teams2$; }
+  get teams3$() { return this._teams3$; }
+  get teams5$() { return this._teams5$; }
+
+  private _teams2$: Observable<ArenaTeam[]> = this.assignTeamData(2);
+  private _teams3$: Observable<ArenaTeam[]> = this.assignTeamData(3);
+  private _teams5$: Observable<ArenaTeam[]> = this.assignTeamData(5);
 
   constructor(private http: HttpClient,
               private router: Router) { }

@@ -1,7 +1,7 @@
 <button class="btn btn-primary" (click)="service.goBack()">&larr; Back</button>
 <br>
 <br>
- 
+
 <div *ngIf="(service.teamDetails$ | async) as teamDetails">
   <p class="h2 text-center">{{ teamDetails.name }}</p>
   <br>
@@ -52,11 +52,11 @@
           </tr>
           <tr>
             <td class="text-right col-xs-6">Won%:</td>
-            <td class="text-success text-left col-xs-6"><strong>{{ (teamDetails.seasonGames == 0 ? 0 : teamDetails.seasonWins / teamDetails.seasonGames * 100) }}%</strong></td>
+            <td class="text-success text-left col-xs-6"><strong>{{ (teamDetails.seasonGames == 0 ? 0 : (teamDetails.seasonWins / teamDetails.seasonGames * 100).toFixed(2)) }}%</strong></td>
           </tr>
           <tr>
             <td class="text-right col-xs-6">Lost%:</td>
-            <td class="text-danger text-left col-xs-6"><strong>{{ (teamDetails.seasonGames == 0 ? 0 : teamDetails.seasonLosses / teamDetails.seasonGames * 100) }}%</strong></td>
+            <td class="text-danger text-left col-xs-6"><strong>{{ (teamDetails.seasonGames == 0 ? 0 : (teamDetails.seasonLosses / teamDetails.seasonGames * 100).toFixed(2)) }}%</strong></td>
           </tr>
         </tbody>
       </table>
@@ -79,11 +79,11 @@
           </tr>
           <tr>
             <td class="text-right col-xs-6">Won%:</td>
-            <td class="text-success text-left col-xs-6"><strong>{{ teamDetails.weekGames == 0 ? 0 : teamDetails.weekWins / teamDetails.weekGames * 100 }}%</strong></td>
+            <td class="text-success text-left col-xs-6"><strong>{{ teamDetails.weekGames == 0 ? 0 : (teamDetails.weekWins / teamDetails.weekGames * 100).toFixed(2) }}%</strong></td>
           </tr>
           <tr>
             <td class="text-right col-xs-6">Lost%:</td>
-            <td class="text-danger text-left col-xs-6"><strong>{{ teamDetails.weekGames == 0 ? 0 : teamDetails.weekLosses / teamDetails.weekGames * 100 }}%</strong></td>
+            <td class="text-danger text-left col-xs-6"><strong>{{ teamDetails.weekGames == 0 ? 0 : (teamDetails.weekLosses / teamDetails.weekGames * 100).toFixed(2) }}%</strong></td>
           </tr>
         </tbody>
       </table>
@@ -112,11 +112,11 @@
             <td class="text-yellow">  <strong>{{ member.personalRating   }}</strong></td>
             <td class="text-warning"> <strong>{{ member.matchmakerRating }}</strong></td>
             <td class="text-primary"> <strong>{{ member.seasonGames      }}</strong></td>
-            <td class="text-success"> <strong>{{ member.seasonWins       }}</strong> &nbsp; ({{ member.seasonGames == 0 ? 0 : member.seasonWins / member.seasonGames * 100 }}%)</td>
-            <td class="text-danger">  <strong>{{ member.seasonLosses     }}</strong> &nbsp; ({{ member.seasonGames == 0 ? 0 : member.seasonLosses / member.seasonGames * 100 }}%)</td>
+            <td class="text-success"> <strong>{{ member.seasonWins       }}</strong> &nbsp; ({{ member.seasonGames == 0 ? 0 : (member.seasonWins / member.seasonGames * 100).toFixed(2) }}%)</td>
+            <td class="text-danger">  <strong>{{ member.seasonLosses     }}</strong> &nbsp; ({{ member.seasonGames == 0 ? 0 : (member.seasonLosses / member.seasonGames * 100).toFixed(2) }}%)</td>
             <td class="text-primary"> <strong>{{ member.weekGames        }}</strong></td>
-            <td class="text-success"> <strong>{{ member.weekWins         }}</strong> &nbsp; ({{ member.weekGames == 0 ? 0 : member.weekWins / member.weekGames * 100 }}%)</td>
-            <td class="text-danger">  <strong>{{ member.weekLosses       }}</strong> &nbsp; ({{ member.weekGames == 0 ? 0 : member.weekLosses / member.weekGames * 100 }}%)</td>
+            <td class="text-success"> <strong>{{ member.weekWins         }}</strong> &nbsp; ({{ member.weekGames == 0 ? 0 : (member.weekWins / member.weekGames * 100).toFixed(2) }}%)</td>
+            <td class="text-danger">  <strong>{{ member.weekLosses       }}</strong> &nbsp; ({{ member.weekGames == 0 ? 0 : (member.weekLosses / member.weekGames * 100).toFixed(2) }}%)</td>
             <td class="text-info">    <strong>{{ member.weekNeeded       }}</strong></td>
           </tr>
         </tbody>

@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { ArenaTeamComponent } from './arena-team.component';
 import { TabsModule } from 'ngx-bootstrap/tabs';
@@ -9,7 +9,7 @@ describe('ArenaTeamComponent', () => {
   let component: ArenaTeamComponent;
   let fixture: ComponentFixture<ArenaTeamComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       imports: [
         TabsModule.forRoot(),

@@ -1,4 +1,4 @@
-import { TestBed, async, getTestBed } from '@angular/core/testing';
+import { TestBed, getTestBed, waitForAsync } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { TabsModule } from 'ngx-bootstrap/tabs';
 import { RouterTestingModule } from '@angular/router/testing';
@@ -14,7 +14,7 @@ describe('ArenaTeamService', () => {
   let injector: TestBed;
   const router = { navigate: jasmine.createSpy('navigate') };
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       imports: [
         HttpClientTestingModule,

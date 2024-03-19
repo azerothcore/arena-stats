@@ -1,14 +1,13 @@
-import { Component } from '@angular/core';
-import { AppService } from './app.service';
-import { SERVER_NAME } from 'config';
+import { ChangeDetectionStrategy, Component, inject } from "@angular/core";
+import { SERVER_NAME } from "config";
+import { AppService } from "./app.service";
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  selector: "app-root",
+  templateUrl: "./app.component.html",
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AppComponent {
-  constructor(public service: AppService) { }
-
-  public readonly serverName = SERVER_NAME;
+  protected service: AppService = inject(AppService);
+  protected readonly serverName = SERVER_NAME;
 }

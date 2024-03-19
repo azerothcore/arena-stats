@@ -1,4 +1,4 @@
-export class ArenaTeam {
+export interface ArenaTeam {
   captainName: string;
   captainRace: number;
   arenaTeamId: number;

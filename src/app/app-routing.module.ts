@@ -1,15 +1,19 @@
-import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
-import { ArenaTeamMemberComponent } from './arena-team-member/arena-team-member.component';
-import { ArenaTeamComponent } from './arena-team/arena-team.component';
+import { NgModule } from "@angular/core";
+import { RouterModule, Routes } from "@angular/router";
+import { ArenaTeamMemberComponent } from "./arena-team-member/arena-team-member.component";
+import { ArenaTeamComponent } from "./arena-team/arena-team.component";
 
 const routes: Routes = [
-  { path: '',         component: ArenaTeamComponent       },
-  { path: 'team/:id', component: ArenaTeamMemberComponent }
+  { path: "", component: ArenaTeamComponent },
+  { path: "team/:id", component: ArenaTeamMemberComponent },
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes, { useHash: true, relativeLinkResolution: 'legacy' })],
-  exports: [RouterModule]
+  imports: [
+    RouterModule.forRoot(routes, {
+      useHash: true,
+    }),
+  ],
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

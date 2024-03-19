@@ -1,4 +1,4 @@
-export class ArenaTeamMember {
+export interface ArenaTeamMember {
   arenaTeamId: number;
   guid: number;
   weekGames: number;

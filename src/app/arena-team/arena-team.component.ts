@@ -1,11 +1,11 @@
-import { Component, OnInit } from '@angular/core';
-import { ArenaTeamService } from './arena-team.service';
+import { ChangeDetectionStrategy, Component, inject } from "@angular/core";
+import { ArenaTeamService } from "./arena-team.service";
 
 @Component({
-  selector: 'app-arena-team',
-  templateUrl: './arena-team.component.html',
-  styleUrls: ['./arena-team.component.scss']
+  selector: "app-arena-team",
+  templateUrl: "./arena-team.component.html",
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ArenaTeamComponent {
-  constructor(public service: ArenaTeamService) { }
+  protected readonly service: ArenaTeamService = inject(ArenaTeamService);
 }

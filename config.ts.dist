@@ -1,2 +1,4 @@
 export const API_URL = 'http://localhost:3000';
 export const SERVER_NAME = 'AzerothCore';
+export const ENABLE_1v1 = false;
+export const ENABLE_3V3_SOLO_QUEUE = false;

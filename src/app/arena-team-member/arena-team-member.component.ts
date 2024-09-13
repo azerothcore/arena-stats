@@ -1,3 +1,4 @@
+import { AsyncPipe } from "@angular/common";
 import {
   ChangeDetectionStrategy,
   Component,
@@ -14,6 +15,8 @@ import { ArenaTeamMemberService } from "./arena-team-member.service";
   templateUrl: "./arena-team-member.component.html",
   styleUrls: ["./arena-team-member.component.scss"],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [AsyncPipe],
 })
 export class ArenaTeamMemberComponent implements OnInit {
   protected readonly service: ArenaTeamMemberService = inject(

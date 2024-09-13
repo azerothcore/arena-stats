@@ -11,14 +11,19 @@ It is based on the [AzerothAPI](https://github.com/AzerothJS/AzerothAPI).
 
 The application require the [AzerothAPI](https://github.com/AzerothJS/AzerothAPI) to access to the characters database.
 
-Clone the Arena-Stats folder inside your web server directory:  
+Clone the Arena-Stats folder inside your web server directory:
+
 ```
 git clone https://github.com/azerothcore/arena-stats.git
 ```
+
 Then copy the file `config.ts.dist` to `config.ts`, open it and set properly with the path of the API and the server name.
 
+This application supports **1v1** and **3v3soloQ** by conf using config.ts.
+
 ### Contribute
-You can help us [opening a new issue](https://github.com/azerothcore/arena-stats/issues/new) to report a bug or a suggestion  
+
+You can help us [opening a new issue](https://github.com/azerothcore/arena-stats/issues/new) to report a bug or a suggestion
 
 or you can donate to support us
 

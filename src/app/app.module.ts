@@ -6,16 +6,20 @@ import { TabsModule } from "ngx-bootstrap/tabs";
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
 import { ArenaTeamMemberComponent } from "./arena-team-member/arena-team-member.component";
+import { ArenaTeamTabComponent } from "./arena-team-tab/arena-team-tab.component";
 import { ArenaTeamComponent } from "./arena-team/arena-team.component";
 
 @NgModule({
-  declarations: [AppComponent, ArenaTeamComponent, ArenaTeamMemberComponent],
+  declarations: [AppComponent],
   imports: [
     CommonModule,
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     TabsModule.forRoot(),
+    ArenaTeamTabComponent,
+    ArenaTeamComponent,
+    ArenaTeamMemberComponent,
   ],
   bootstrap: [AppComponent],
 })

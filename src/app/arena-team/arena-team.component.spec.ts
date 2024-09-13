@@ -1,11 +1,11 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
 
-import { ArenaTeamComponent } from './arena-team.component';
-import { TabsModule } from 'ngx-bootstrap/tabs';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { RouterTestingModule } from '@angular/router/testing';
+import { HttpClientTestingModule } from "@angular/common/http/testing";
+import { RouterTestingModule } from "@angular/router/testing";
+import { TabsModule } from "ngx-bootstrap/tabs";
+import { ArenaTeamComponent } from "./arena-team.component";
 
-describe('ArenaTeamComponent', () => {
+describe("ArenaTeamComponent", () => {
   let component: ArenaTeamComponent;
   let fixture: ComponentFixture<ArenaTeamComponent>;
 
@@ -14,11 +14,10 @@ describe('ArenaTeamComponent', () => {
       imports: [
         TabsModule.forRoot(),
         HttpClientTestingModule,
-        RouterTestingModule
+        RouterTestingModule,
+        ArenaTeamComponent,
       ],
-      declarations: [ ArenaTeamComponent ]
-    })
-    .compileComponents();
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -27,7 +26,7 @@ describe('ArenaTeamComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

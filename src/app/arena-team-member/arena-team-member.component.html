@@ -2,7 +2,8 @@
 <br />
 <br />
 
-<div *ngIf="service.teamDetails$ | async as teamDetails">
+@if(service.teamDetails$ | async; as teamDetails) {
+<div>
   <p class="h2 text-center">{{ teamDetails.name }}</p>
   <br />
 
@@ -20,7 +21,11 @@
           <tr>
             <td class="text-right col-xs-6">Type:</td>
             <td class="text-primary text-left col-xs-6">
-              <strong>{{ teamDetails.type }}v{{ teamDetails.type }}</strong>
+              <strong>{{
+                teamDetails.type === 4
+                  ? "3v3soloQ"
+                  : teamDetails.type + "v" + teamDetails.type
+              }}</strong>
             </td>
           </tr>
           <tr>
@@ -37,7 +42,7 @@
           </tr>
           <tr>
             <td class="text-right col-xs-6">Captain:</td>
-            <td class="text-left col-xs-6" [ngClass]="teamDetails.faction">
+            <td class="text-left col-xs-6" [class]="teamDetails.faction">
               <strong>{{ teamDetails.captainName }}</strong>
             </td>
           </tr>
@@ -172,8 +177,9 @@
           <th class="text-center">Week Needed</th>
         </thead>
         <tbody>
-          <tr *ngFor="let member of service.members$ | async">
-            <td [ngClass]="member.faction">
+          @for(member of service.members$ | async; track $index) {
+          <tr>
+            <td [class]="member.faction">
               <strong>{{ member.name }}</strong>
             </td>
             <td>
@@ -231,8 +237,10 @@
               <strong>{{ member.weekNeeded }}</strong>
             </td>
           </tr>
+          }
         </tbody>
       </table>
     </div>
   </div>
 </div>
+}

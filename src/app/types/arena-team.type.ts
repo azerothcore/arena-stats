@@ -1,6 +1,8 @@
 export interface ArenaTeam {
   captainName: string;
   captainRace: number;
+  captainGender: number;
+  captainClass: number;
   arenaTeamId: number;
   name: string;
   captainGuid: number;

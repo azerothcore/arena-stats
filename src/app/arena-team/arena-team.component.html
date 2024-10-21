@@ -4,6 +4,7 @@
     <tab [heading]="team.tabName" [id]="team.tabName">
       <app-arena-team-tab
         [teams]="service.teams$[team.arenaType] | async"
+        [isSolo]="team?.solo"
       ></app-arena-team-tab>
     </tab>
     }

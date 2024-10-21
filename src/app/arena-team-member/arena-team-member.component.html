@@ -21,11 +21,7 @@
           <tr>
             <td class="text-right col-xs-6">Type:</td>
             <td class="text-primary text-left col-xs-6">
-              <strong>{{
-                teamDetails.type === 4
-                  ? "3v3soloQ"
-                  : teamDetails.type + "v" + teamDetails.type
-              }}</strong>
+              <strong>{{ teamDetails.type === 4 ? '3v3soloQ' : teamDetails.type + 'v' + teamDetails.type }}</strong>
             </td>
           </tr>
           <tr>
@@ -75,14 +71,7 @@
             <td class="text-right col-xs-6">Won%:</td>
             <td class="text-success text-left col-xs-6">
               <strong
-                >{{
-                  teamDetails.seasonGames == 0
-                    ? 0
-                    : (
-                        (teamDetails.seasonWins / teamDetails.seasonGames) *
-                        100
-                      ).toFixed(2)
-                }}%</strong
+                >{{ teamDetails.seasonGames == 0 ? 0 : ((teamDetails.seasonWins / teamDetails.seasonGames) * 100).toFixed(2) }}%</strong
               >
             </td>
           </tr>
@@ -90,14 +79,7 @@
             <td class="text-right col-xs-6">Lost%:</td>
             <td class="text-danger text-left col-xs-6">
               <strong
-                >{{
-                  teamDetails.seasonGames == 0
-                    ? 0
-                    : (
-                        (teamDetails.seasonLosses / teamDetails.seasonGames) *
-                        100
-                      ).toFixed(2)
-                }}%</strong
+                >{{ teamDetails.seasonGames == 0 ? 0 : ((teamDetails.seasonLosses / teamDetails.seasonGames) * 100).toFixed(2) }}%</strong
               >
             </td>
           </tr>
@@ -129,31 +111,13 @@
           <tr>
             <td class="text-right col-xs-6">Won%:</td>
             <td class="text-success text-left col-xs-6">
-              <strong
-                >{{
-                  teamDetails.weekGames == 0
-                    ? 0
-                    : (
-                        (teamDetails.weekWins / teamDetails.weekGames) *
-                        100
-                      ).toFixed(2)
-                }}%</strong
-              >
+              <strong>{{ teamDetails.weekGames == 0 ? 0 : ((teamDetails.weekWins / teamDetails.weekGames) * 100).toFixed(2) }}%</strong>
             </td>
           </tr>
           <tr>
             <td class="text-right col-xs-6">Lost%:</td>
             <td class="text-danger text-left col-xs-6">
-              <strong
-                >{{
-                  teamDetails.weekGames == 0
-                    ? 0
-                    : (
-                        (teamDetails.weekLosses / teamDetails.weekGames) *
-                        100
-                      ).toFixed(2)
-                }}%</strong
-              >
+              <strong>{{ teamDetails.weekGames == 0 ? 0 : ((teamDetails.weekLosses / teamDetails.weekGames) * 100).toFixed(2) }}%</strong>
             </td>
           </tr>
         </tbody>
@@ -183,13 +147,7 @@
               <strong>{{ member.name }}</strong>
             </td>
             <td>
-              <strong
-                ><img [src]="'assets/class/' + member.class + '.gif'" />
-                <img
-                  [src]="
-                    'assets/race/' + member.race + '-' + member.gender + '.gif'
-                  "
-              /></strong>
+              <app-player-icons [charClass]="member.class" [gender]="member.gender" [race]="member.race"></app-player-icons>
             </td>
             <td class="text-yellow">
               <strong>{{ member.personalRating }}</strong>
@@ -202,18 +160,12 @@
             </td>
             <td class="text-success">
               <strong>{{ member.seasonWins }}</strong> &nbsp; ({{
-                member.seasonGames == 0
-                  ? 0
-                  : ((member.seasonWins / member.seasonGames) * 100).toFixed(2)
+                member.seasonGames == 0 ? 0 : ((member.seasonWins / member.seasonGames) * 100).toFixed(2)
               }}%)
             </td>
             <td class="text-danger">
               <strong>{{ member.seasonLosses }}</strong> &nbsp; ({{
-                member.seasonGames == 0
-                  ? 0
-                  : ((member.seasonLosses / member.seasonGames) * 100).toFixed(
-                      2
-                    )
+                member.seasonGames == 0 ? 0 : ((member.seasonLosses / member.seasonGames) * 100).toFixed(2)
               }}%)
             </td>
             <td class="text-primary">
@@ -221,16 +173,12 @@
             </td>
             <td class="text-success">
               <strong>{{ member.weekWins }}</strong> &nbsp; ({{
-                member.weekGames == 0
-                  ? 0
-                  : ((member.weekWins / member.weekGames) * 100).toFixed(2)
+                member.weekGames == 0 ? 0 : ((member.weekWins / member.weekGames) * 100).toFixed(2)
               }}%)
             </td>
             <td class="text-danger">
               <strong>{{ member.weekLosses }}</strong> &nbsp; ({{
-                member.weekGames == 0
-                  ? 0
-                  : ((member.weekLosses / member.weekGames) * 100).toFixed(2)
+                member.weekGames == 0 ? 0 : ((member.weekLosses / member.weekGames) * 100).toFixed(2)
               }}%)
             </td>
             <td class="text-info">

@@ -3,7 +3,9 @@
     <thead>
       <th class="text-center">Rank</th>
       <th class="text-center">Name</th>
+      @if (!isSolo) {
       <th class="text-center">Captain</th>
+      }
       <th class="text-center">Rating</th>
       <th class="text-center">Season Games</th>
       <th class="text-center">Season Wins</th>
@@ -16,10 +18,14 @@
         <td>
           <strong>{{ team.rank }}</strong>
         </td>
+        @if (!isSolo) {
         <td>
           <strong>{{ team.name }}</strong>
         </td>
-        <td>
+        }
+        <td style="text-align: left">
+          <app-player-icons [charClass]="team.captainClass" [gender]="team.captainGender" [race]="team.captainRace"></app-player-icons>
+          &nbsp;
           <strong>{{ team.captainName }}</strong>
         </td>
         <td>
@@ -30,20 +36,14 @@
         </td>
         <td>
           <strong>{{ team.seasonWins }}</strong> &nbsp; ({{
-            team.seasonGames == 0
-              ? 0
-              : ((team.seasonWins / team.seasonGames) * 100 | number)
+            team.seasonGames == 0 ? 0 : ((team.seasonWins / team.seasonGames) * 100 | number)
           }}%)
         </td>
         <td>
           <strong>{{ team.weekGames }}</strong>
         </td>
         <td>
-          <strong>{{ team.weekWins }}</strong> &nbsp; ({{
-            team.weekGames == 0
-              ? 0
-              : ((team.weekWins / team.weekGames) * 100 | number)
-          }}%)
+          <strong>{{ team.weekWins }}</strong> &nbsp; ({{ team.weekGames == 0 ? 0 : ((team.weekWins / team.weekGames) * 100 | number) }}%)
         </td>
       </tr>
       }

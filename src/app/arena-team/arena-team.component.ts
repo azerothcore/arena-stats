@@ -15,10 +15,12 @@ import { ArenaTeamService } from "./arena-team.service";
 export class ArenaTeamComponent {
   protected readonly service: ArenaTeamService = inject(ArenaTeamService);
   protected readonly teams = [
-    ENABLE_1v1 ? { tabName: "1v1", arenaType: 1 } : {},
+    ENABLE_1v1 ? { tabName: "1v1", arenaType: 1, solo: true } : {},
     { tabName: "2v2", arenaType: 2 },
     { tabName: "3v3", arenaType: 3 },
-    ENABLE_3V3_SOLO_QUEUE ? { tabName: "3v3soloQ", arenaType: 4 } : {},
+    ENABLE_3V3_SOLO_QUEUE
+      ? { tabName: "3v3soloQ", arenaType: 4, solo: true }
+      : {},
     { tabName: "5v5", arenaType: 5 },
   ].filter((t) => t.hasOwnProperty("tabName"));
 }

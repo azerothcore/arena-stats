@@ -139,6 +139,7 @@
           <th class="text-center">Week Won</th>
           <th class="text-center">Week Lost</th>
           <th class="text-center">Week Needed</th>
+          <th class="text-center">Next ArenaPoints</th>
         </thead>
         <tbody>
           @for(member of service.members$ | async; track $index) {
@@ -183,6 +184,11 @@
             </td>
             <td class="text-info">
               <strong>{{ member.weekNeeded }}</strong>
+            </td>
+            <td [class.text-secondary]="member.weekNeeded > 0">
+              <img src="assets/ArenaPoints.png" width="24" height="24" style="vertical-align: sub" /><strong>{{
+                getNextArenaPoints(member.personalRating, teamDetails.type)
+              }}</strong>
             </td>
           </tr>
           }

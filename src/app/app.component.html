@@ -1,16 +1,18 @@
-<br>
-<div class="container text-center">
-
+<br />
+<div class="container">
   <p class="h3 text-center">{{ serverName }} ArenaStats</p>
-  <br>
+  <br />
 
-  <div>
-    <p class="text-center text-success">Next Arena Points distribution (server time): <strong>{{ (service.nextArenaPointsDistributionTime$ | async) * 1000  | date:'yyyy-MM-dd HH:mm:ss' : 'UTC' }}</strong></p>
+  <app-next-arena-points />
+
+  <div class="text-center">
+    <router-outlet></router-outlet>
   </div>
 
-  <router-outlet></router-outlet>
-
-  <hr>
+  <hr />
   <!-- We worked for free to build this software, please do not remove the credit! -->
-  <p class="text-center credits">Created by <a target="_blank" href="https://github.com/ShinDarth"><strong>ShinDarth</strong></a> && <a target="_blank" href="https://github.com/Helias"><strong>Helias</strong></a></p>
+  <p class="text-center credits">
+    Created by <a target="_blank" href="https://github.com/ShinDarth"><strong>ShinDarth</strong></a> &&
+    <a target="_blank" href="https://github.com/Helias"><strong>Helias</strong></a>
+  </p>
 </div>

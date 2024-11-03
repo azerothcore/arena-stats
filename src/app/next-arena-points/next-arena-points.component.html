@@ -1,0 +1,75 @@
+<div>
+  <p class="text-center text-success">
+    <img src="assets/ArenaPoints.png" width="24" height="24" style="vertical-align: sub" /> Next
+    <a class="text-primary text-underline" style="cursor: pointer" (click)="isCollapsed = !isCollapsed">Arena Points distribution</a>
+    (server time):
+    <strong>{{ (service.nextArenaPointsDistributionTime$ | async) * 1000 | date : 'yyyy-MM-dd HH:mm:ss' : 'UTC' }}</strong>
+  </p>
+
+  <div [collapse]="isCollapsed" [isAnimated]="true">
+    <div class="text-center">ArenaPoints distribution formulas:</div>
+    <div class="row">
+      <div class="col-xs-12 col-sm-8 col-md-6 mx-auto text-left">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>Type</th>
+              <th>Multiplier</th>
+            </tr>
+          </thead>
+          <tbody>
+            @if (ENABLE_1v1) {
+            <tr>
+              <td>1v1:</td>
+              <td><span class="text-primary">points_base</span> * {{ ArenaPointsMultiplier['t1v1'] }}</td>
+            </tr>
+            }
+            <tr>
+              <td>2v2</td>
+              <td><span class="text-primary">points_base</span> * {{ ArenaPointsMultiplier['t2v2'] }}</td>
+            </tr>
+            <tr>
+              <td>3v3</td>
+              <td><span class="text-primary">points_base</span> * {{ ArenaPointsMultiplier['t3v3'] }}</td>
+            </tr>
+            @if (ENABLE_3V3_SOLO_QUEUE) {
+            <tr>
+              <td>3v3soloQ:</td>
+              <td><span class="text-primary">points_base</span> * {{ ArenaPointsMultiplier['t3v3soloQ'] }}</td>
+            </tr>
+            }
+            <tr>
+              <td>5v5:</td>
+              <td><span class="text-primary">points_base</span> * {{ ArenaPointsMultiplier['t5v5'] }}</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th class="text-info">personalRating</th>
+              <th class="text-primary">points_base</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>&lt;= 1500</td>
+              <td>344</td>
+            </tr>
+            <tr>
+              <td>&gt; 1500</td>
+              <td>1511.26 / (1.0 + 1639.28 * e^(-0.00412 * <span class="text-info">personalRating</span>))</td>
+            </tr>
+          </tbody>
+        </table>
+        Sources: [<a href="https://wowwiki-archive.fandom.com/wiki/Arena_point_calculator#:~:text=If%20%5BRating%5D>1500,a%20fives%20team"
+          >wowiki</a
+        >,
+        <a href="https://github.com/azerothcore/azerothcore-wotlk/blob/master/src/server/game/Battlegrounds/ArenaTeam.cpp#L652"
+          >azerothcore</a
+        >]
+      </div>
+    </div>
+  </div>
+</div>

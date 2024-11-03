@@ -1,13 +1,13 @@
-import { ChangeDetectionStrategy, Component, inject } from "@angular/core";
-import { SERVER_NAME } from "config";
-import { AppService } from "./app.service";
+import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { SERVER_NAME } from 'config';
 
 @Component({
-  selector: "app-root",
-  templateUrl: "./app.component.html",
+  selector: 'app-root',
+  templateUrl: './app.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AppComponent {
-  protected service: AppService = inject(AppService);
   protected readonly serverName = SERVER_NAME;
+
+  protected isCollapsed = true;
 }

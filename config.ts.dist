@@ -2,3 +2,11 @@ export const API_URL = 'http://localhost:3000';
 export const SERVER_NAME = 'AzerothCore';
 export const ENABLE_1v1 = false;
 export const ENABLE_3V3_SOLO_QUEUE = false;
+
+export const ArenaPointsMultiplier = {
+  t1v1: 0.64,
+  t2v2: 0.76,
+  t3v3: 0.88,
+  t3v3soloQ: 0.80,
+  t5v5: 1,
+};

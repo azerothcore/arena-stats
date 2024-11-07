@@ -15,4 +15,5 @@ export interface ArenaTeamMember {
   race: number;
   gender: number;
   faction?: string;
+  nextArenaPoints?: number;
 }

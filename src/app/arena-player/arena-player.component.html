@@ -1,0 +1,86 @@
+<button class="btn btn-primary" (click)="goBack()">&larr; Back</button>
+<br />
+<br />
+
+@if(player) {
+
+<h2 class="mb-5 mt-5">
+  <app-player-icons [charClass]="player.class" [gender]="player.gender" [race]="player.race" />
+  {{ player.name }}
+</h2>
+
+} @if(playerArenaTeams) {
+<div class="table-responsive arena-player">
+  <table class="table table-striped table-bordered table-hover">
+    <thead>
+      <th class="text-center">Type</th>
+      <th class="text-center">Team Name</th>
+      <th class="text-center">Personal Rating</th>
+      <th class="text-center">MMR</th>
+      <th class="text-center">MaxMMR</th>
+      <th class="text-center">Season Games</th>
+      <th class="text-center">Season Won</th>
+      <th class="text-center">Season Lost</th>
+      <th class="text-center">Week Games</th>
+      <th class="text-center">Week Won</th>
+      <th class="text-center">Week Lost</th>
+      <th class="text-center">Week Needed</th>
+      <th class="text-center">Next AP</th>
+    </thead>
+    <tbody>
+      @for (arenaTeam of playerArenaTeams; track $index) {
+      <tr>
+        <td class="text-danger">
+          <strong>{{ arenaTeam.arenaType == 4 ? '3v3soloQ' : arenaTeam.arenaType + 'v' + arenaTeam.arenaType }}</strong>
+        </td>
+        <td class="text-info">
+          <strong>{{ [1, 4].includes(arenaTeam.arenaType) ? '' : arenaTeam.arenaTeamName }}</strong>
+        </td>
+        <td class="text-yellow">
+          <strong>{{ arenaTeam.personalRating }}</strong>
+        </td>
+        <td class="text-warning">
+          <strong>{{ arenaTeam.matchMakerRating }}</strong>
+        </td>
+        <td class="text-warning">
+          <strong>{{ arenaTeam.maxMMR }}</strong>
+        </td>
+        <td class="text-primary">
+          <strong>{{ arenaTeam.seasonGames }}</strong>
+        </td>
+        <td class="text-success">
+          <strong>{{ arenaTeam.seasonWins }}</strong> &nbsp; ({{
+            arenaTeam.seasonGames == 0 ? 0 : ((arenaTeam.seasonWins / arenaTeam.seasonGames) * 100).toFixed(2)
+          }}%)
+        </td>
+        <td class="text-danger">
+          <strong>{{ arenaTeam.seasonLosses }}</strong> &nbsp; ({{
+            arenaTeam.seasonGames == 0 ? 0 : ((arenaTeam.seasonLosses / arenaTeam.seasonGames) * 100).toFixed(2)
+          }}%)
+        </td>
+        <td class="text-primary">
+          <strong>{{ arenaTeam.weekGames }}</strong>
+        </td>
+        <td class="text-success">
+          <strong>{{ arenaTeam.weekWins }}</strong> &nbsp; ({{
+            arenaTeam.weekGames == 0 ? 0 : ((arenaTeam.weekWins / arenaTeam.weekGames) * 100).toFixed(2)
+          }}%)
+        </td>
+        <td class="text-danger">
+          <strong>{{ arenaTeam.weekLosses }}</strong> &nbsp; ({{
+            arenaTeam.weekGames == 0 ? 0 : ((arenaTeam.weekLosses / arenaTeam.weekGames) * 100).toFixed(2)
+          }}%)
+        </td>
+        <td class="text-info">
+          <strong>{{ arenaTeam.weekNeeded }}</strong>
+        </td>
+        <td [class.text-secondary]="arenaTeam.weekNeeded > 0">
+          <img src="assets/ArenaPoints.png" width="24" height="24" style="vertical-align: sub" />
+          <strong>{{ arenaTeam.nextArenaPoints }}</strong>
+        </td>
+      </tr>
+      }
+    </tbody>
+  </table>
+</div>
+}

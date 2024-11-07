@@ -1,0 +1,21 @@
+<div class="search-player">
+  <ngx-select
+    [allowClear]="true"
+    [items]="charList"
+    optionValueField="guid"
+    optionTextField="name"
+    [formControl]="charNameSelected"
+    placeholder="No player selected"
+    (typed)="charNameText$.next($event)"
+  >
+    <ng-template ngx-select-option ngx-select-option-selected let-option let-text="text">
+      <app-player-icons [charClass]="option.data.class" [gender]="option.data.gender" [race]="option.data.race" />
+      &nbsp;
+      <span [innerHtml]="text"></span>
+    </ng-template>
+
+    <ng-template ngx-select-option-not-found let-input> "{{ input }}" not found </ng-template>
+  </ngx-select>
+</div>
+
+<br />

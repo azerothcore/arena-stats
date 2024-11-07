@@ -143,7 +143,7 @@
         </thead>
         <tbody>
           @for(member of service.members$ | async; track $index) {
-          <tr>
+          <tr (click)="redirectToPlayer(member.guid)">
             <td [class]="member.faction">
               <strong>{{ member.name }}</strong>
             </td>

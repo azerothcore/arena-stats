@@ -1,0 +1,17 @@
+.search-player {
+  width: 400px;
+
+    .ngx-select,
+    .form-control,
+    .form-control:focus,
+    .ngx-select__toggle,
+    input  {
+      background-color: black !important;
+      color: white !important;
+    }
+
+    app-player-icons img {
+      width: 32px;
+      height: 32px;
+    }
+}

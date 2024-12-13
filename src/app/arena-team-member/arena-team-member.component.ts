@@ -1,6 +1,7 @@
 import { AsyncPipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { PopoverModule } from 'ngx-bootstrap/popover';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { PlayerIconComponent } from '../player-icons/player-icons.component';
@@ -13,7 +14,7 @@ import { ArenaTeamMemberService } from './arena-team-member.service';
   styleUrls: ['./arena-team-member.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [AsyncPipe, PlayerIconComponent],
+  imports: [AsyncPipe, PlayerIconComponent, PopoverModule],
 })
 export class ArenaTeamMemberComponent implements OnInit {
   protected readonly service: ArenaTeamMemberService = inject(ArenaTeamMemberService);

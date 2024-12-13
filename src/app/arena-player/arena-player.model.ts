@@ -2,6 +2,7 @@ import { Player } from '../search-player/search-player.model';
 
 export interface ArenaTeamData {
   arenaTeamId: number;
+  arenaTeamWeekGames: number;
   weekGames: number;
   weekWins: number;
   seasonGames: number;

@@ -3,6 +3,7 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, OnDestro
 import { ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { API_URL } from 'config';
+import { PopoverModule } from 'ngx-bootstrap/popover';
 import { NgxSelectModule } from 'ngx-select-ex';
 import { Subject } from 'rxjs';
 import { switchMap, takeUntil } from 'rxjs/operators';
@@ -18,7 +19,7 @@ import { PlayerArenaTeams } from './arena-player.model';
   templateUrl: './arena-player.component.html',
   styleUrls: ['./arena-player.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [NgxSelectModule, ReactiveFormsModule, PlayerIconComponent],
+  imports: [NgxSelectModule, ReactiveFormsModule, PlayerIconComponent, PopoverModule],
   encapsulation: ViewEncapsulation.None,
 })
 export class ArenaPlayerComponent implements OnInit, OnDestroy {
@@ -53,14 +54,19 @@ export class ArenaPlayerComponent implements OnInit, OnDestroy {
           arenaStatsPerType[arenaType] = charArenaStat;
         }
 
-        this.playerArenaTeams = arenaTeamsData.map((arenaTeamData) => ({
-          ...arenaTeamData,
-          seasonLosses: arenaTeamData.seasonGames - arenaTeamData.seasonWins,
-          weekLosses: arenaTeamData.weekGames - arenaTeamData.weekWins,
-          weekNeeded: arenaTeamData.weekGames > 9 ? 0 : 10 - arenaTeamData.weekGames,
-          nextArenaPoints: getNextArenaPoints(arenaTeamData.personalRating, arenaTeamData.arenaType),
-          ...arenaStatsPerType[arenaTeamData.arenaType],
-        }));
+        this.playerArenaTeams = arenaTeamsData.map((arenaTeamData) => {
+          // To get points, a player has to participate in at least 30% of the matches
+          const neededGames = arenaTeamData.arenaTeamWeekGames >= 10 ? Math.ceil(arenaTeamData.arenaTeamWeekGames * 0.3) : 10;
+
+          return {
+            ...arenaTeamData,
+            seasonLosses: arenaTeamData.seasonGames - arenaTeamData.seasonWins,
+            weekLosses: arenaTeamData.weekGames - arenaTeamData.weekWins,
+            weekNeeded: arenaTeamData.weekGames > neededGames ? 0 : neededGames - arenaTeamData.weekGames,
+            nextArenaPoints: getNextArenaPoints(arenaTeamData.personalRating, arenaTeamData.arenaType),
+            ...arenaStatsPerType[arenaTeamData.arenaType],
+          };
+        });
 
         this.cdRef.markForCheck();
       });

@@ -1,9 +1,9 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable, inject } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { API_URL } from 'config';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { combineLatest, Observable } from 'rxjs';
+import { map, shareReplay } from 'rxjs/operators';
 import { ArenaTeamMember } from '../types/arena-team-member.type';
 import { ArenaTeam } from '../types/arena-team.type';
 import { getFaction } from '../utils/get-faction';
@@ -25,6 +25,7 @@ export class ArenaTeamMemberService {
 
   private loadTeamDetail(): void {
     this.teamDetails$ = this.http.get<ArenaTeam[]>(API_URL + '/characters/arena_team/id/' + this.arenaTeamId).pipe(
+      shareReplay(),
       map((data: ArenaTeam[]) => {
         data[0].seasonLosses = data[0].seasonGames - data[0].seasonWins;
         data[0].weekLosses = data[0].weekGames - data[0].weekWins;
@@ -36,12 +37,18 @@ export class ArenaTeamMemberService {
   }
 
   private loadTeamMemberDetail(): void {
-    this.members$ = this.http.get<ArenaTeamMember[]>(API_URL + '/characters/arena_team_member/' + this.arenaTeamId).pipe(
-      map((data: ArenaTeamMember[]) => {
+    this.members$ = combineLatest([
+      this.http.get<ArenaTeamMember[]>(API_URL + '/characters/arena_team_member/' + this.arenaTeamId),
+      this.teamDetails$,
+    ]).pipe(
+      map(([data, teamdetails]: [ArenaTeamMember[], ArenaTeam]) => {
+        // To get points, a player has to participate in at least 30% of the matches
+        const neededGames = teamdetails.weekGames >= 10 ? Math.ceil(teamdetails.weekGames * 0.3) : 10;
+
         data.forEach((value: ArenaTeamMember, idx: number) => {
           data[idx].seasonLosses = value.seasonGames - value.seasonWins;
           data[idx].weekLosses = value.weekGames - value.weekWins;
-          data[idx].weekNeeded = value.weekGames > 9 ? 0 : 10 - value.weekGames;
+          data[idx].weekNeeded = value.weekGames > neededGames ? 0 : neededGames - value.weekGames;
           data[idx].faction = getFaction(value.race);
         });
 

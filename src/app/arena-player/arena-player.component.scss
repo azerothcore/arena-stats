@@ -1,5 +1,11 @@
 .arena-player table thead th {
   border-right: 1px solid grey;
+  font-size: 14px;
+  padding: 1px 2px;
+}
+
+.arena-player table thead th i {
+  padding: 0px;
 }
 
 app-player-icons img {

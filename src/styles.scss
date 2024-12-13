@@ -3,6 +3,11 @@
 @import "../node_modules/bootswatch/dist/cyborg/bootswatch";
 @import "../node_modules/bootswatch/dist/cyborg/bootstrap.min.css";
 
+@import '../node_modules/@fortawesome/fontawesome-free/scss/fontawesome';
+@import '../node_modules/@fortawesome/fontawesome-free/scss/solid';
+@import '../node_modules/@fortawesome/fontawesome-free/scss/regular';
+@import '../node_modules/@fortawesome/fontawesome-free/scss/brands';
+
 .alliance td, .alliance strong { color: #1A67F4; }
 .horde td, .horde strong { color: #CD0A0E; }
 

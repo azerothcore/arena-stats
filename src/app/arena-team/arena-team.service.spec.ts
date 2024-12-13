@@ -1,30 +1,22 @@
-import {
-  HttpClientTestingModule,
-  HttpTestingController,
-} from "@angular/common/http/testing";
-import { TestBed, getTestBed, waitForAsync } from "@angular/core/testing";
-import { Router } from "@angular/router";
-import { RouterTestingModule } from "@angular/router/testing";
-import { TabsModule } from "ngx-bootstrap/tabs";
+import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import { TestBed, getTestBed, waitForAsync } from '@angular/core/testing';
+import { Router } from '@angular/router';
+import { RouterTestingModule } from '@angular/router/testing';
+import { TabsModule } from 'ngx-bootstrap/tabs';
 
-import { API_URL } from "config";
-import { ArenaTeam } from "../types/arena-team.type";
-import { ArenaTeamComponent } from "./arena-team.component";
-import { ArenaTeamService } from "./arena-team.service";
+import { API_URL } from 'config';
+import { ArenaTeam } from '../types/arena-team.type';
+import { ArenaTeamComponent } from './arena-team.component';
+import { ArenaTeamService } from './arena-team.service';
 
-describe("ArenaTeamService", () => {
+describe('ArenaTeamService', () => {
   let httpMock: HttpTestingController;
   let injector: TestBed;
-  const router = { navigate: jasmine.createSpy("navigate") };
+  const router = { navigate: jasmine.createSpy('navigate') };
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [
-        HttpClientTestingModule,
-        TabsModule.forRoot(),
-        RouterTestingModule,
-        ArenaTeamComponent,
-      ],
+      imports: [HttpClientTestingModule, TabsModule.forRoot(), RouterTestingModule, ArenaTeamComponent],
       providers: [{ provide: Router, useValue: router }],
     }).compileComponents();
 
@@ -36,14 +28,16 @@ describe("ArenaTeamService", () => {
     httpMock.verify();
   });
 
-  it("processTeams() should work correctly", () => {
+  it('processTeams() should work correctly', () => {
     const service = TestBed.get(ArenaTeamService);
     let mockDataTeams: ArenaTeam[] = [
       {
-        captainName: "Helias",
+        captainName: 'Helias',
+        captainGender: 1,
+        captainClass: 1,
         captainRace: 2,
         arenaTeamId: 10,
-        name: "Helias",
+        name: 'Helias',
         captainGuid: 10,
         type: 10,
         rating: 10,
@@ -59,34 +53,36 @@ describe("ArenaTeamService", () => {
         emblemColor: 10,
         borderStyle: 10,
         borderColor: 10,
-        faction: "",
+        faction: '',
       },
     ];
 
-    mockDataTeams = service["processTeams"](mockDataTeams);
+    mockDataTeams = service['processTeams'](mockDataTeams);
 
-    expect(mockDataTeams[0].faction).toBe("horde");
+    expect(mockDataTeams[0].faction).toBe('horde');
     expect(mockDataTeams[0].rank).toBe(10);
 
     mockDataTeams[0].captainRace = 1;
     mockDataTeams[0].rank = 0;
 
-    mockDataTeams = service["processTeams"](mockDataTeams);
+    mockDataTeams = service['processTeams'](mockDataTeams);
 
-    expect(mockDataTeams[0].faction).toBe("alliance");
+    expect(mockDataTeams[0].faction).toBe('alliance');
     expect(mockDataTeams[0].rank).toBe(9999);
 
-    expect(service["processTeams"]()).not.toBeDefined();
+    expect(service['processTeams']()).not.toBeDefined();
   });
 
-  it("assignTeamData() shjould work correctly", () => {
+  it('assignTeamData() should work correctly', () => {
     const service: ArenaTeamService = TestBed.get(ArenaTeamService);
     const mockData: ArenaTeam[] = [
       {
-        captainName: "Helias",
+        captainName: 'Helias',
+        captainGender: 1,
+        captainClass: 1,
         captainRace: 2,
         arenaTeamId: 10,
-        name: "Helias",
+        name: 'Helias',
         captainGuid: 10,
         type: 10,
         rating: 10,
@@ -102,22 +98,22 @@ describe("ArenaTeamService", () => {
         emblemColor: 10,
         borderStyle: 10,
         borderColor: 10,
-        faction: "",
+        faction: '',
       },
     ];
 
     service.teams$[2].subscribe((data) => expect(data).toEqual(mockData));
 
     const req = httpMock.expectOne(`${API_URL}/characters/arena_team/type/2`);
-    expect(req.request.method).toBe("GET");
+    expect(req.request.method).toBe('GET');
     req.flush(mockData);
   });
 
-  it("showTeam() should work correctly", () => {
+  it('showTeam() should work correctly', () => {
     const service: ArenaTeamService = TestBed.get(ArenaTeamService);
     const param = 1;
 
     service.showTeam(param);
-    expect(router.navigate).toHaveBeenCalledWith(["/team", param]);
+    expect(router.navigate).toHaveBeenCalledWith(['/team', param]);
   });
 });

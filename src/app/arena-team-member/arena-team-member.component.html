@@ -138,7 +138,14 @@
           <th class="text-center">Week Games</th>
           <th class="text-center">Week Won</th>
           <th class="text-center">Week Lost</th>
-          <th class="text-center">Week Needed</th>
+          <th class="text-center">
+            Week Needed
+            <i
+              class="fas fa-info-circle text-info"
+              [popover]="'The games needed for the week are 30% of the total amount played by the team.'"
+              [outsideClick]="true"
+            ></i>
+          </th>
           <th class="text-center">Next ArenaPoints</th>
         </thead>
         <tbody>
@@ -170,7 +177,12 @@
               }}%)
             </td>
             <td class="text-primary">
-              <strong>{{ member.weekGames }}</strong>
+              <strong
+                >{{ member.weekGames }} ({{
+                  (teamDetails.weekGames === 0 || !teamDetails.weekGames ? 0 : member.weekGames / (teamDetails.weekGames / 100)).toFixed(2)
+                }}
+                %)</strong
+              >
             </td>
             <td class="text-success">
               <strong>{{ member.weekWins }}</strong> &nbsp; ({{

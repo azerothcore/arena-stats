@@ -1,23 +1,19 @@
-@import "../node_modules/bootswatch/dist/cyborg/variables";
-@import "../node_modules/bootstrap/scss/bootstrap";
-@import "../node_modules/bootswatch/dist/cyborg/bootswatch";
-@import "../node_modules/bootswatch/dist/cyborg/bootstrap.min.css";
-
-@import '../node_modules/@fortawesome/fontawesome-free/scss/fontawesome';
-@import '../node_modules/@fortawesome/fontawesome-free/scss/solid';
-@import '../node_modules/@fortawesome/fontawesome-free/scss/regular';
-@import '../node_modules/@fortawesome/fontawesome-free/scss/brands';
-
-.alliance td, .alliance strong { color: #1A67F4; }
-.horde td, .horde strong { color: #CD0A0E; }
+.alliance td,
+.alliance strong {
+  color: #1a67f4;
+}
+.horde td,
+.horde strong {
+  color: #cd0a0e;
+}
 
 th {
   color: #fff;
-  background-color: rgba(255, 255, 255, .1);
+  background-color: rgba(255, 255, 255, 0.1);
 }
 
 table tr:nth-child(2n) {
-  background-color: rgba(255, 255, 255, .1);
+  background-color: rgba(255, 255, 255, 0.1);
 }
 
 table tr {
@@ -25,5 +21,5 @@ table tr {
 }
 
 table tr:hover {
-  background-color: rgba(255, 255, 255, .2) !important;
+  background-color: rgba(255, 255, 255, 0.2) !important;
 }

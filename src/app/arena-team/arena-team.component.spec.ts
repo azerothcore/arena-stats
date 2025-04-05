@@ -1,9 +1,10 @@
 import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
 
-import { HttpClientTestingModule } from "@angular/common/http/testing";
+import { provideHttpClientTesting } from "@angular/common/http/testing";
 import { RouterTestingModule } from "@angular/router/testing";
 import { TabsModule } from "ngx-bootstrap/tabs";
 import { ArenaTeamComponent } from "./arena-team.component";
+import { provideHttpClient, withInterceptorsFromDi } from "@angular/common/http";
 
 describe("ArenaTeamComponent", () => {
   let component: ArenaTeamComponent;
@@ -11,13 +12,11 @@ describe("ArenaTeamComponent", () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [
-        TabsModule.forRoot(),
-        HttpClientTestingModule,
+    imports: [TabsModule.forRoot(),
         RouterTestingModule,
-        ArenaTeamComponent,
-      ],
-    }).compileComponents();
+        ArenaTeamComponent],
+    providers: [provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
+}).compileComponents();
   }));
 
   beforeEach(() => {

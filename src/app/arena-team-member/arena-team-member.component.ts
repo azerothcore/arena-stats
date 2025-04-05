@@ -9,12 +9,11 @@ import { getNextArenaPoints } from '../utils/get-arena-points';
 import { ArenaTeamMemberService } from './arena-team-member.service';
 
 @Component({
-  selector: 'app-arena-team-member',
-  templateUrl: './arena-team-member.component.html',
-  styleUrls: ['./arena-team-member.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
-  imports: [AsyncPipe, PlayerIconComponent, PopoverModule],
+    selector: 'app-arena-team-member',
+    templateUrl: './arena-team-member.component.html',
+    styleUrls: ['./arena-team-member.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    imports: [AsyncPipe, PlayerIconComponent, PopoverModule]
 })
 export class ArenaTeamMemberComponent implements OnInit {
   protected readonly service: ArenaTeamMemberService = inject(ArenaTeamMemberService);

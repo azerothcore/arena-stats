@@ -11,13 +11,12 @@ import { PlayerIconComponent } from '../player-icons/player-icons.component';
 import { Player } from './search-player.model';
 
 @Component({
-  standalone: true,
-  selector: 'app-search-player',
-  templateUrl: './search-player.component.html',
-  styleUrls: ['./search-player.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [NgxSelectModule, ReactiveFormsModule, PlayerIconComponent],
-  encapsulation: ViewEncapsulation.None,
+    selector: 'app-search-player',
+    templateUrl: './search-player.component.html',
+    styleUrls: ['./search-player.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    imports: [NgxSelectModule, ReactiveFormsModule, PlayerIconComponent],
+    encapsulation: ViewEncapsulation.None
 })
 export class SearchPlayerComponent implements OnInit, OnDestroy {
   private readonly http: HttpClient = inject(HttpClient);

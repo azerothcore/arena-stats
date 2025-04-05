@@ -3,7 +3,7 @@
     <thead>
       <th class="text-center">Rank</th>
       <th class="text-center">Name</th>
-      @if (!isSolo) {
+      @if (!isSolo()) {
       <th class="text-center">Captain</th>
       }
       <th class="text-center">Rating</th>
@@ -13,12 +13,12 @@
       <th class="text-center">Week Wins</th>
     </thead>
     <tbody>
-      @for(team of teams; track $index) {
+      @for(team of teams(); track $index) {
       <tr [class]="team.faction" (click)="service.showTeam(team.arenaTeamId)">
         <td>
           <strong>{{ team.rank }}</strong>
         </td>
-        @if (!isSolo) {
+        @if (!isSolo()) {
         <td>
           <strong>{{ team.name }}</strong>
         </td>

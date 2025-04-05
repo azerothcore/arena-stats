@@ -1,7 +1,7 @@
 <div class="search-player">
   <ngx-select
     [allowClear]="true"
-    [items]="charList"
+    [items]="charList()"
     optionValueField="guid"
     optionTextField="name"
     [formControl]="charNameSelected"

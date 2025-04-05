@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { DomSanitizer, SafeStyle } from '@angular/platform-browser';
 import { Router } from '@angular/router';
@@ -11,12 +12,12 @@ import { PlayerIconComponent } from '../player-icons/player-icons.component';
 import { Player } from './search-player.model';
 
 @Component({
-    selector: 'app-search-player',
-    templateUrl: './search-player.component.html',
-    styleUrls: ['./search-player.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [NgxSelectModule, ReactiveFormsModule, PlayerIconComponent],
-    encapsulation: ViewEncapsulation.None
+  selector: 'app-search-player',
+  templateUrl: './search-player.component.html',
+  styleUrls: ['./search-player.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [NgxSelectModule, ReactiveFormsModule, PlayerIconComponent],
+  encapsulation: ViewEncapsulation.None,
 })
 export class SearchPlayerComponent implements OnInit, OnDestroy {
   private readonly http: HttpClient = inject(HttpClient);
@@ -28,30 +29,22 @@ export class SearchPlayerComponent implements OnInit, OnDestroy {
 
   protected readonly charNameText$ = new Subject<string>();
   protected readonly charNameSelected = new FormControl<Player['guid']>(null);
-  protected charList: Player[] = [];
+  protected readonly charList = toSignal(
+    this.charNameText$.pipe(
+      debounceTime(500),
+      distinctUntilChanged(),
+      filter((name) => name?.length >= 2 && name?.length <= 12),
+      switchMap((charName) => this.http.get<Player[]>(`${API_URL}/characters/search_characters?name=${charName}`)),
+    ),
+    { initialValue: [] },
+  );
 
   ngOnInit(): void {
-    this.charNameTyping();
     this.onSelectCharacter();
   }
 
   protected style(data: string): SafeStyle {
     return this.sanitizer.bypassSecurityTrustStyle(data);
-  }
-
-  private charNameTyping(): void {
-    this.charNameText$
-      .pipe(
-        debounceTime(500),
-        distinctUntilChanged(),
-        filter((name) => name?.length >= 2 && name?.length <= 12),
-        switchMap((charName) => this.http.get<Player[]>(`${API_URL}/characters/search_characters?name=${charName}`)),
-        takeUntil(this.unsubscribe$),
-      )
-      .subscribe((values) => {
-        this.charList = values;
-        this.cdRef.markForCheck();
-      });
   }
 
   private onSelectCharacter(): void {

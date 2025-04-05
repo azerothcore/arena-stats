@@ -6,11 +6,10 @@ import { PlayerIconComponent } from '../player-icons/player-icons.component';
 import { ArenaTeam } from '../types/arena-team.type';
 
 @Component({
-  selector: 'app-arena-team-tab',
-  standalone: true,
-  imports: [TabsModule, CommonModule, PlayerIconComponent],
-  templateUrl: './arena-team-tab.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
+    selector: 'app-arena-team-tab',
+    imports: [TabsModule, CommonModule, PlayerIconComponent],
+    templateUrl: './arena-team-tab.component.html',
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ArenaTeamTabComponent {
   @Input() teams: ArenaTeam[];

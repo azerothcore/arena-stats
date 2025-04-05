@@ -5,11 +5,10 @@ import { CollapseModule } from 'ngx-bootstrap/collapse';
 import { AppService } from '../app.service';
 
 @Component({
-  standalone: true,
-  selector: 'app-next-arena-points',
-  templateUrl: './next-arena-points.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [CollapseModule, BrowserAnimationsModule],
+    selector: 'app-next-arena-points',
+    templateUrl: './next-arena-points.component.html',
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    imports: [CollapseModule, BrowserAnimationsModule]
 })
 export class NextArenaPointsComponent {
   protected readonly service: AppService = inject(AppService);

@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { HttpClientModule } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
@@ -12,21 +12,15 @@ import { ArenaTeamComponent } from './arena-team/arena-team.component';
 import { NextArenaPointsComponent } from './next-arena-points/next-arena-points.component';
 import { SearchPlayerComponent } from './search-player/search-player.component';
 
-@NgModule({
-  declarations: [AppComponent],
-  imports: [
-    CommonModule,
-    BrowserModule,
-    AppRoutingModule,
-    ReactiveFormsModule,
-    HttpClientModule,
-    TabsModule.forRoot(),
-    ArenaTeamTabComponent,
-    ArenaTeamComponent,
-    ArenaTeamMemberComponent,
-    NextArenaPointsComponent,
-    SearchPlayerComponent,
-  ],
-  bootstrap: [AppComponent],
-})
+@NgModule({ declarations: [AppComponent],
+    bootstrap: [AppComponent], imports: [CommonModule,
+        BrowserModule,
+        AppRoutingModule,
+        ReactiveFormsModule,
+        TabsModule.forRoot(),
+        ArenaTeamTabComponent,
+        ArenaTeamComponent,
+        ArenaTeamMemberComponent,
+        NextArenaPointsComponent,
+        SearchPlayerComponent], providers: [provideHttpClient(withInterceptorsFromDi())] })
 export class AppModule {}

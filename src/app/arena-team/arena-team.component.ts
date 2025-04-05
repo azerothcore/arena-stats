@@ -6,11 +6,10 @@ import { ArenaTeamTabComponent } from "../arena-team-tab/arena-team-tab.componen
 import { ArenaTeamService } from "./arena-team.service";
 
 @Component({
-  selector: "app-arena-team",
-  templateUrl: "./arena-team.component.html",
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
-  imports: [TabsModule, ArenaTeamTabComponent, AsyncPipe],
+    selector: "app-arena-team",
+    templateUrl: "./arena-team.component.html",
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    imports: [TabsModule, ArenaTeamTabComponent, AsyncPipe]
 })
 export class ArenaTeamComponent {
   protected readonly service: ArenaTeamService = inject(ArenaTeamService);

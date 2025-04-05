@@ -1,8 +1,5 @@
-import { HttpClientModule } from "@angular/common/http";
-import {
-  HttpClientTestingModule,
-  HttpTestingController,
-} from "@angular/common/http/testing";
+import { provideHttpClient, withInterceptorsFromDi } from "@angular/common/http";
+import { HttpTestingController, provideHttpClientTesting } from "@angular/common/http/testing";
 import { TestBed, getTestBed, waitForAsync } from "@angular/core/testing";
 
 import { API_URL } from "config";
@@ -15,8 +12,9 @@ describe("AppService", () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientModule, HttpClientTestingModule],
-    }).compileComponents();
+    imports: [],
+    providers: [provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
+}).compileComponents();
 
     injector = getTestBed();
     httpMock = injector.get(HttpTestingController);

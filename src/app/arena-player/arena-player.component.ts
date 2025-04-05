@@ -14,13 +14,12 @@ import { getNextArenaPoints } from '../utils/get-arena-points';
 import { PlayerArenaTeams } from './arena-player.model';
 
 @Component({
-  standalone: true,
-  selector: 'app-arena-player',
-  templateUrl: './arena-player.component.html',
-  styleUrls: ['./arena-player.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [NgxSelectModule, ReactiveFormsModule, PlayerIconComponent, PopoverModule],
-  encapsulation: ViewEncapsulation.None,
+    selector: 'app-arena-player',
+    templateUrl: './arena-player.component.html',
+    styleUrls: ['./arena-player.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    imports: [NgxSelectModule, ReactiveFormsModule, PlayerIconComponent, PopoverModule],
+    encapsulation: ViewEncapsulation.None
 })
 export class ArenaPlayerComponent implements OnInit, OnDestroy {
   private readonly http: HttpClient = inject(HttpClient);

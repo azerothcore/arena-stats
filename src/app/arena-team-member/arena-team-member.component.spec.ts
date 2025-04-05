@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
 import { ActivatedRoute, convertToParamMap } from "@angular/router";
 
-import { HttpClientModule } from "@angular/common/http";
+import { provideHttpClient, withInterceptorsFromDi } from "@angular/common/http";
 import { RouterTestingModule } from "@angular/router/testing";
 import { of } from "rxjs";
 import { ArenaTeamMemberComponent } from "./arena-team-member.component";
@@ -13,18 +13,16 @@ describe("ArenaTeamMemberComponent", () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [
-        RouterTestingModule,
-        HttpClientModule,
-        ArenaTeamMemberComponent,
-      ],
-      providers: [
+    imports: [RouterTestingModule,
+        ArenaTeamMemberComponent],
+    providers: [
         {
-          provide: ActivatedRoute,
-          useValue: { paramMap: of(convertToParamMap({ id: 1 })) },
+            provide: ActivatedRoute,
+            useValue: { paramMap: of(convertToParamMap({ id: 1 })) },
         },
-      ],
-    }).compileComponents();
+        provideHttpClient(withInterceptorsFromDi()),
+    ]
+}).compileComponents();
   }));
 
   beforeEach(() => {

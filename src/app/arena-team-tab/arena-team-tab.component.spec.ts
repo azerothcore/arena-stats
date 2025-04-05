@@ -1,8 +1,9 @@
 import { ComponentFixture, TestBed } from "@angular/core/testing";
 
-import { HttpClientTestingModule } from "@angular/common/http/testing";
+import { provideHttpClientTesting } from "@angular/common/http/testing";
 import { ArenaTeamService } from "../arena-team/arena-team.service";
 import { ArenaTeamTabComponent } from "./arena-team-tab.component";
+import { provideHttpClient, withInterceptorsFromDi } from "@angular/common/http";
 
 describe("ArenaTeamTabComponent", () => {
   let component: ArenaTeamTabComponent;
@@ -10,9 +11,9 @@ describe("ArenaTeamTabComponent", () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule, ArenaTeamTabComponent],
-      providers: [ArenaTeamService],
-    }).compileComponents();
+    imports: [ArenaTeamTabComponent],
+    providers: [ArenaTeamService, provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
+}).compileComponents();
 
     fixture = TestBed.createComponent(ArenaTeamTabComponent);
     component = fixture.componentInstance;

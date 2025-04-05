@@ -1,4 +1,4 @@
-import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { TestBed, getTestBed, waitForAsync } from '@angular/core/testing';
 import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
@@ -8,6 +8,7 @@ import { API_URL } from 'config';
 import { ArenaTeam } from '../types/arena-team.type';
 import { ArenaTeamComponent } from './arena-team.component';
 import { ArenaTeamService } from './arena-team.service';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('ArenaTeamService', () => {
   let httpMock: HttpTestingController;
@@ -16,9 +17,9 @@ describe('ArenaTeamService', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule, TabsModule.forRoot(), RouterTestingModule, ArenaTeamComponent],
-      providers: [{ provide: Router, useValue: router }],
-    }).compileComponents();
+    imports: [TabsModule.forRoot(), RouterTestingModule, ArenaTeamComponent],
+    providers: [{ provide: Router, useValue: router }, provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
+}).compileComponents();
 
     injector = getTestBed();
     httpMock = injector.get(HttpTestingController);

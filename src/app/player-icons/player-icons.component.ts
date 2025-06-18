@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 
 @Component({
   selector: 'app-player-icons',
@@ -7,7 +7,7 @@ import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PlayerIconComponent {
-  @Input() charClass: number;
-  @Input() race: number;
-  @Input() gender: number;
+  readonly charClass = input<number>(undefined);
+  readonly race = input<number>(undefined);
+  readonly gender = input<number>(undefined);
 }

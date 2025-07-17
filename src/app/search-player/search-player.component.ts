@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { DomSanitizer, SafeStyle } from '@angular/platform-browser';
@@ -21,7 +21,6 @@ import { Player } from './search-player.model';
 })
 export class SearchPlayerComponent implements OnInit, OnDestroy {
   private readonly http: HttpClient = inject(HttpClient);
-  private readonly cdRef: ChangeDetectorRef = inject(ChangeDetectorRef);
   protected readonly sanitizer: DomSanitizer = inject(DomSanitizer);
   private readonly router: Router = inject(Router);
 

@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
@@ -12,7 +11,7 @@ import { SearchPlayerComponent } from './search-player/search-player.component';
   templateUrl: './app.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [CommonModule, RouterModule, ReactiveFormsModule, TabsModule, NextArenaPointsComponent, SearchPlayerComponent],
+  imports: [RouterModule, ReactiveFormsModule, TabsModule, NextArenaPointsComponent, SearchPlayerComponent],
 })
 export class AppComponent {
   protected readonly serverName = SERVER_NAME;

@@ -20,7 +20,7 @@ export class ArenaTeamMemberComponent implements OnInit {
   private readonly route: ActivatedRoute = inject(ActivatedRoute);
   private readonly router: Router = inject(Router);
 
-  private readonly destroy$ = new Subject();
+  private readonly destroy$ = new Subject<void>();
 
   protected readonly getNextArenaPoints = getNextArenaPoints;
 

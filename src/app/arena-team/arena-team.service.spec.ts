@@ -22,7 +22,7 @@ describe('ArenaTeamService', () => {
 }).compileComponents();
 
     injector = getTestBed();
-    httpMock = injector.get(HttpTestingController);
+    httpMock = injector.inject(HttpTestingController);
   }));
 
   afterEach(() => {
@@ -30,7 +30,7 @@ describe('ArenaTeamService', () => {
   });
 
   it('processTeams() should work correctly', () => {
-    const service = TestBed.get(ArenaTeamService);
+    const service = TestBed.inject(ArenaTeamService);
     let mockDataTeams: ArenaTeam[] = [
       {
         captainName: 'Helias',
@@ -71,11 +71,11 @@ describe('ArenaTeamService', () => {
     expect(mockDataTeams[0].faction).toBe('alliance');
     expect(mockDataTeams[0].rank).toBe(9999);
 
-    expect(service['processTeams']()).not.toBeDefined();
+    expect(service['processTeams']([]).length).toBe(0);
   });
 
   it('assignTeamData() should work correctly', () => {
-    const service: ArenaTeamService = TestBed.get(ArenaTeamService);
+    const service: ArenaTeamService = TestBed.inject(ArenaTeamService);
     const mockData: ArenaTeam[] = [
       {
         captainName: 'Helias',
@@ -111,7 +111,7 @@ describe('ArenaTeamService', () => {
   });
 
   it('showTeam() should work correctly', () => {
-    const service: ArenaTeamService = TestBed.get(ArenaTeamService);
+    const service: ArenaTeamService = TestBed.inject(ArenaTeamService);
     const param = 1;
 
     service.showTeam(param);

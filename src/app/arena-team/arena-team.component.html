@@ -1,12 +1,16 @@
 <div>
   <tabset>
-    @for(team of teams; track $index) {
-    <tab [heading]="team.tabName" [id]="team.tabName">
-      <app-arena-team-tab
-        [teams]="service.teams$[team.arenaType] | async"
-        [isSolo]="team?.solo"
-      ></app-arena-team-tab>
-    </tab>
+    <!-- <tab heading="Top arena rated" id="top-arena-rated"> test </tab> -->
+    @for (team of teams; track $index) {
+      <tab [heading]="team.tabName" [id]="team.tabName">
+        <app-arena-team-tab [teams]="service.teams$[team.arenaType] | async" [isSolo]="team?.solo"></app-arena-team-tab>
+      </tab>
+    }
+
+    @if (afterViewInit()) {
+      <tab heading="Detailed Score" id="detailed-score">
+        <app-detailed-score />
+      </tab>
     }
   </tabset>
 </div>

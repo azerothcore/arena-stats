@@ -1,0 +1,35 @@
+.detailed-score-container {
+  padding: 20px;
+
+  h2 {
+    margin-bottom: 20px;
+    color: #333;
+  }
+
+  .loading,
+  .error,
+  .no-data {
+    padding: 20px;
+    text-align: center;
+    font-size: 16px;
+  }
+
+  .error {
+    color: #d9534f;
+  }
+
+  .loading {
+    color: #31708f;
+  }
+}
+
+select,
+input {
+  background-color: black !important;
+  color: white !important;
+  border: 1px solid white;
+}
+
+.form-label {
+  color: white;
+}

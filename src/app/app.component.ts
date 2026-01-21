@@ -10,7 +10,6 @@ import { SearchPlayerComponent } from './search-player/search-player.component';
   selector: 'app-root',
   templateUrl: './app.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [RouterModule, ReactiveFormsModule, TabsModule, NextArenaPointsComponent, SearchPlayerComponent],
 })
 export class AppComponent {

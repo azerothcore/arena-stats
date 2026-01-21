@@ -1,6 +1,7 @@
 import { ArenaPointsMultiplier } from 'config';
 import { ArenaTeamMember } from '../types/arena-team-member.type';
 import { ArenaTeam } from '../types/arena-team.type';
+import { ARENA_TYPE_3v3_SOLO_QUEUE } from './arena-type';
 
 export function getNextArenaPoints(rating: ArenaTeamMember['personalRating'], type: ArenaTeam['type']): number {
   /**
@@ -9,7 +10,7 @@ export function getNextArenaPoints(rating: ArenaTeamMember['personalRating'], ty
    * azerothcore https://github.com/azerothcore/azerothcore-wotlk/blob/master/src/server/game/Battlegrounds/ArenaTeam.cpp#L652
    */
 
-  const keyMultiplier = type === 4 ? `t3v3soloQ` : `t${type}v${type}`;
+  const keyMultiplier = type === ARENA_TYPE_3v3_SOLO_QUEUE ? `t3v3soloQ` : `t${type}v${type}`;
   let ARENA_POINTS_BASE = 344;
 
   if (rating > 1500) {

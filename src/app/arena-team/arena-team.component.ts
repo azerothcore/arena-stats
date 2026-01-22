@@ -4,6 +4,8 @@ import { ENABLE_1v1, ENABLE_3V3_SOLO_QUEUE } from 'config';
 import { TabsModule } from 'ngx-bootstrap/tabs';
 import { ArenaTeamTabComponent } from '../arena-team-tab/arena-team-tab.component';
 import { DetailedScoreComponent } from '../detailed-score/detailed-score.component';
+import { NextArenaPointsComponent } from '../next-arena-points/next-arena-points.component';
+import { SearchPlayerComponent } from '../search-player/search-player.component';
 import { ARENA_TYPE_1v1, ARENA_TYPE_3v3_SOLO_QUEUE } from '../utils/arena-type';
 import { ArenaTeamService } from './arena-team.service';
 
@@ -11,7 +13,7 @@ import { ArenaTeamService } from './arena-team.service';
   selector: 'app-arena-team',
   templateUrl: './arena-team.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [TabsModule, ArenaTeamTabComponent, AsyncPipe, DetailedScoreComponent],
+  imports: [TabsModule, ArenaTeamTabComponent, AsyncPipe, DetailedScoreComponent, NextArenaPointsComponent, SearchPlayerComponent],
 })
 export class ArenaTeamComponent implements AfterViewInit {
   protected readonly service: ArenaTeamService = inject(ArenaTeamService);

@@ -102,7 +102,7 @@
         </thead>
         <tbody>
           @for (fight of arenaFights; track fight) {
-            <tr>
+            <tr (click)="navigateToFight(fight.fight_id)" style="cursor: pointer">
               <td>{{ fight.fight_id }}</td>
               <td>{{ fight.time | date: 'dd/MM/yyyy' }}</td>
               <td>

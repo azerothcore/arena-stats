@@ -4,7 +4,19 @@
 
 @if (service.teamDetails$ | async; as teamDetails) {
   <div>
-    <p class="h2 text-center">{{ teamDetails.name }}</p>
+    <h2 class="h2 text-center">
+      @if ([ARENA_TYPE_1v1, ARENA_TYPE_3v3_SOLO_QUEUE].includes(teamDetails.type)) {
+        <app-player-icons
+          [charClass]="teamDetails.captainRace"
+          [race]="teamDetails.captainRace"
+          [gender]="teamDetails.captainGender"
+          [size]="64"
+          [spacing]="true"
+        />
+      }
+
+      {{ teamDetails.name }}
+    </h2>
     <br />
 
     <div class="row team-details">
@@ -157,7 +169,7 @@
                   <strong>{{ member.name }}</strong>
                 </td>
                 <td>
-                  <app-player-icons [charClass]="member.class" [gender]="member.gender" [race]="member.race"></app-player-icons>
+                  <app-player-icons [charClass]="member.class" [gender]="member.gender" [race]="member.race" />
                 </td>
                 <td class="text-yellow">
                   <strong>{{ member.personalRating }}</strong>

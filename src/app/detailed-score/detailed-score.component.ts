@@ -2,6 +2,7 @@ import { DatePipe } from '@angular/common';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { ChangeDetectionStrategy, Component, inject, OnInit, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
 import { PlayerIconComponent } from '../player-icons/player-icons.component';
 import { ArenaFightLog } from '../types/arena-fight-log.interface';
 import { ArenaFightMember } from '../types/arena-fight-member.interface';
@@ -28,6 +29,7 @@ export class DetailedScoreComponent implements OnInit {
   protected filterMaxLevel = signal<number | null>(null);
 
   private readonly http = inject(HttpClient);
+  private readonly router = inject(Router);
 
   protected readonly ARENA_TYPE_3v3_SOLO_QUEUE = ARENA_TYPE_3v3_SOLO_QUEUE;
   protected readonly ARENA_TYPE_1v1 = ARENA_TYPE_1v1;
@@ -116,5 +118,9 @@ export class DetailedScoreComponent implements OnInit {
       return getFaction(validMembers[0].race);
     }
     return '';
+  }
+
+  protected navigateToFight(fightId: number): void {
+    this.router.navigate(['/fight', fightId]);
   }
 }

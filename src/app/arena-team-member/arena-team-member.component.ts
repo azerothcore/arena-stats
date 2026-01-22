@@ -5,7 +5,7 @@ import { PopoverModule } from 'ngx-bootstrap/popover';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { PlayerIconComponent } from '../player-icons/player-icons.component';
-import { ARENA_TYPE_3v3_SOLO_QUEUE } from '../utils/arena-type';
+import { ARENA_TYPE_1v1, ARENA_TYPE_3v3_SOLO_QUEUE } from '../utils/arena-type';
 import { getNextArenaPoints } from '../utils/get-arena-points';
 import { ArenaTeamMemberService } from './arena-team-member.service';
 
@@ -23,6 +23,7 @@ export class ArenaTeamMemberComponent implements OnInit {
 
   private readonly destroy$ = new Subject();
 
+  protected readonly ARENA_TYPE_1v1 = ARENA_TYPE_1v1;
   protected readonly ARENA_TYPE_3v3_SOLO_QUEUE = ARENA_TYPE_3v3_SOLO_QUEUE;
 
   protected readonly getNextArenaPoints = getNextArenaPoints;

@@ -1,0 +1,19 @@
+<div>
+  <button class="btn btn-primary mx-3" (click)="arenaTeamMemberService.goBack()">&lt; Prev</button>
+  <button class="btn btn-primary mx-3" (click)="arenaTeamMemberService.goBack()">&larr; Back</button>
+  <button class="btn btn-primary mx-3" (click)="arenaTeamMemberService.goBack()">&gt; Next</button>
+</div>
+<br />
+<br />
+
+<div class="fight-container">
+  <h2>
+    Fight ID: <strong>{{ fightId }}</strong>
+  </h2>
+
+  @if (fightId) {
+    <p>Fight details will be displayed here...</p>
+  } @else {
+    <p>No fight ID provided</p>
+  }
+</div>

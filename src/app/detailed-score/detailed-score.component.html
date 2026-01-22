@@ -73,6 +73,7 @@
           (change)="applyFilters()"
           placeholder="e.g., 100"
           min="1"
+          max="500"
         />
       </div>
       <div class="col-md-2 d-flex align-items-end">
@@ -94,6 +95,7 @@
             <th>#</th>
             <th>Time</th>
             <th>Type</th>
+            <th>Level</th>
             <th>Winner</th>
             <th>Loser</th>
           </tr>
@@ -106,6 +108,7 @@
               <td>
                 {{ fight.type === ARENA_TYPE_3v3_SOLO_QUEUE ? '3v3soloQ' : `${fight.type}v${fight.type}` }}
               </td>
+              <td>{{ [70, 80].includes(fight.level) ? fight.level : '71-79' }}</td>
               <td [class]="getTeamFaction(fight.winner_members)" style="text-align: left" class="px-5">
                 @if (fight.type === ARENA_TYPE_1v1 || fight.type === ARENA_TYPE_3v3_SOLO_QUEUE) {
                   @for (member of filterNullMembers(fight.winner_members); track member.name) {

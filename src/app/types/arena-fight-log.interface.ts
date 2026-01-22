@@ -4,6 +4,7 @@ export interface ArenaFightLog {
   fight_id: number;
   time: string;
   type: number;
+  level: number;
   winner_name: string;
   loser_name: string;
   winner_faction: string;

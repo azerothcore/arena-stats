@@ -5,7 +5,81 @@
     margin-bottom: 20px;
   }
 
+  h3 {
+    margin-top: 20px;
+    margin-bottom: 15px;
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
+
   p {
     margin-bottom: 10px;
+  }
+
+  .loading {
+    padding: 20px;
+    text-align: center;
+    font-size: 1.2rem;
+    color: #666;
+  }
+
+  .error {
+    margin: 20px 0;
+  }
+
+  .fight-info,
+  .member-stats {
+    margin-bottom: 30px;
+  }
+
+  .table {
+    margin-bottom: 0;
+
+    th {
+      font-weight: 600;
+      white-space: nowrap;
+    }
+
+    td {
+      vertical-align: middle;
+    }
+  }
+
+  .text-success {
+    color: #28a745 !important;
+    font-weight: bold;
+  }
+
+  .text-danger {
+    color: #dc3545 !important;
+    font-weight: bold;
+  }
+
+  .team-matchup {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0px;
+    padding: 20px 0;
+
+    .team-name {
+      flex: 1;
+
+      &.winner-team {
+        text-align: center;
+      }
+
+      &.loser-team {
+        text-align: center;
+      }
+    }
+
+    .vs-divider {
+      flex-shrink: 0;
+      text-align: center;
+      color: #fff;
+      font-weight: bold;
+      font-size: 3rem;
+    }
   }
 }

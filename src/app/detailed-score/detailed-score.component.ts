@@ -1,8 +1,10 @@
 import { DatePipe } from '@angular/common';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { ChangeDetectionStrategy, Component, inject, OnInit, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, inject, OnInit, signal } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+import { API_URL } from 'config';
 import { PlayerIconComponent } from '../player-icons/player-icons.component';
 import { ArenaFightLog } from '../types/arena-fight-log.interface';
 import { ArenaFightMember } from '../types/arena-fight-member.interface';
@@ -30,6 +32,7 @@ export class DetailedScoreComponent implements OnInit {
 
   private readonly http = inject(HttpClient);
   private readonly router = inject(Router);
+  private readonly destroyRef = inject(DestroyRef);
 
   protected readonly ARENA_TYPE_3v3_SOLO_QUEUE = ARENA_TYPE_3v3_SOLO_QUEUE;
   protected readonly ARENA_TYPE_1v1 = ARENA_TYPE_1v1;
@@ -63,17 +66,20 @@ export class DetailedScoreComponent implements OnInit {
       params = params.set('maxLevel', this.filterMaxLevel()!.toString());
     }
 
-    this.http.get<ArenaFightLog[]>('http://localhost:3000/characters/log_arena_fights', { params }).subscribe({
-      next: (data) => {
-        this.arenaFights = data;
-        this.loading.set(false);
-      },
-      error: (err) => {
-        this.error = 'Failed to load arena fight logs';
-        console.error('Error fetching arena fights:', err);
-        this.loading.set(false);
-      },
-    });
+    this.http
+      .get<ArenaFightLog[]>(`${API_URL}/characters/log_arena_fights`, { params })
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe({
+        next: (data) => {
+          this.arenaFights = data;
+          this.loading.set(false);
+        },
+        error: (err) => {
+          this.error = 'Failed to load arena fight logs';
+          console.error('Error fetching arena fights:', err);
+          this.loading.set(false);
+        },
+      });
   }
 
   protected applyFilters(): void {

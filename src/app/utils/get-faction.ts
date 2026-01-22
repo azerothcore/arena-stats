@@ -1,4 +1,5 @@
-export function getFaction(race: number): string {
+export type FactionType = 'alliance' | 'horde' | '';
+export function getFaction(race: number): FactionType {
   switch (race) {
     case 2:
     case 5:

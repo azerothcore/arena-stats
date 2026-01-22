@@ -1,10 +1,14 @@
 .alliance td,
-.alliance strong {
-  color: #1a67f4;
+.alliance strong,
+.alliance .h2,
+.alliance {
+  color: #1a67f4 !important;
 }
 .horde td,
-.horde strong {
-  color: #cd0a0e;
+.horde strong,
+.horde .h2,
+.horde {
+  color: #cd0a0e !important;
 }
 
 th {

@@ -1,22 +1,21 @@
-import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
-import { provideHttpClientTesting } from "@angular/common/http/testing";
-import { RouterTestingModule } from "@angular/router/testing";
-import { TabsModule } from "ngx-bootstrap/tabs";
-import { ArenaTeamComponent } from "./arena-team.component";
-import { provideHttpClient, withInterceptorsFromDi } from "@angular/common/http";
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
+import { provideAnimations } from '@angular/platform-browser/animations';
+import { RouterTestingModule } from '@angular/router/testing';
+import { TabsModule } from 'ngx-bootstrap/tabs';
+import { ArenaTeamComponent } from './arena-team.component';
 
-describe("ArenaTeamComponent", () => {
+describe('ArenaTeamComponent', () => {
   let component: ArenaTeamComponent;
   let fixture: ComponentFixture<ArenaTeamComponent>;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-    imports: [TabsModule.forRoot(),
-        RouterTestingModule,
-        ArenaTeamComponent],
-    providers: [provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
-}).compileComponents();
+      imports: [TabsModule.forRoot(), RouterTestingModule, ArenaTeamComponent],
+      providers: [provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting(), provideAnimations()],
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -25,7 +24,7 @@ describe("ArenaTeamComponent", () => {
     fixture.detectChanges();
   });
 
-  it("should create", () => {
+  it('should create', () => {
     expect(component).toBeTruthy();
   });
 });

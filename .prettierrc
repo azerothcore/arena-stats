@@ -1,10 +1,11 @@
 {
+  "arrowParens": "always",
+  "bracketSpacing": true,
+  "plugins": ["prettier-plugin-gherkin", "prettier-plugin-sort-json"],
   "printWidth": 140,
-  "tabWidth": 2,
-  "useTabs": false,
   "semi": true,
   "singleQuote": true,
+  "tabWidth": 2,
   "trailingComma": "all",
-  "bracketSpacing": true,
-  "arrowParens": "always"
+  "useTabs": false
 }

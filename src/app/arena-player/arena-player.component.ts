@@ -10,16 +10,17 @@ import { switchMap, takeUntil } from 'rxjs/operators';
 import { ArenaTypes } from '../arena-team/arena-team.model';
 import { PlayerIconComponent } from '../player-icons/player-icons.component';
 import { Player } from '../search-player/search-player.model';
+import { ARENA_TYPE_3v3_SOLO_QUEUE } from '../utils/arena-type';
 import { getNextArenaPoints } from '../utils/get-arena-points';
 import { PlayerArenaTeams } from './arena-player.model';
 
 @Component({
-    selector: 'app-arena-player',
-    templateUrl: './arena-player.component.html',
-    styleUrls: ['./arena-player.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [NgxSelectModule, ReactiveFormsModule, PlayerIconComponent, PopoverModule],
-    encapsulation: ViewEncapsulation.None
+  selector: 'app-arena-player',
+  templateUrl: './arena-player.component.html',
+  styleUrls: ['./arena-player.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [NgxSelectModule, ReactiveFormsModule, PlayerIconComponent, PopoverModule],
+  encapsulation: ViewEncapsulation.None,
 })
 export class ArenaPlayerComponent implements OnInit, OnDestroy {
   private readonly http: HttpClient = inject(HttpClient);
@@ -28,6 +29,7 @@ export class ArenaPlayerComponent implements OnInit, OnDestroy {
   private readonly router: Router = inject(Router);
 
   private readonly unsubscribe$ = new Subject<void>();
+  protected readonly ARENA_TYPE_3v3_SOLO_QUEUE = ARENA_TYPE_3v3_SOLO_QUEUE;
 
   protected player: Player;
   protected playerArenaTeams: any[];

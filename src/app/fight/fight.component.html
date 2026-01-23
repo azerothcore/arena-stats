@@ -1,0 +1,186 @@
+@let fight_prev = fightStats()?.fight_id_previous;
+@let fight_next = fightStats()?.fight_id_next;
+
+<div>
+  <button class="btn btn-primary mx-3" (click)="fight_prev ? goToFight(fight_prev) : ''" [disabled]="!fightStats()?.fight_id_previous">
+    &larr; Prev
+  </button>
+  <button class="btn btn-primary mx-3" (click)="arenaTeamMemberService.goBack()">Back</button>
+  <button class="btn btn-primary mx-3" (click)="fight_next ? goToFight(fight_next) : ''" [disabled]="!fightStats()?.fight_id_next">
+    Next &rarr;
+  </button>
+</div>
+
+<div class="fight-container">
+  @let _loading = loading();
+  @let _error = error();
+  @let _fightStats = fightStats();
+  @let isArena3v3Or1v1 = [ARENA_TYPE_3v3_SOLO_QUEUE, ARENA_TYPE_1v1].includes(_fightStats.fight.type);
+
+  @if (_loading) {
+    <div class="loading">Loading fight statistics...</div>
+  }
+
+  @if (_error) {
+    <div class="error alert alert-danger">
+      {{ _error }}
+    </div>
+  }
+
+  @if (!_loading && !_error && _fightStats) {
+    <div class="fight-info mb-4">
+      @if (ARENA_TYPE_1v1 === _fightStats.fight.type) {
+        <div class="team-matchup mb-4">
+          <div class="team-name winner-team" [class]="getFaction(_fightStats.memberStats[0].race)">
+            <span class="h2">
+              <app-player-icons
+                [charClass]="_fightStats.memberStats[0].class"
+                [race]="_fightStats.memberStats[0].race"
+                [gender]="_fightStats.memberStats[0].gender"
+                [size]="64"
+                [spacing]="true"
+              />
+              {{ _fightStats.memberStats[0].name }}</span
+            >
+          </div>
+          <div class="vs-divider">vs</div>
+          <div class="team-name loser-team" [class]="getFaction(_fightStats.memberStats[1].race)">
+            <span class="h2">
+              <app-player-icons
+                [charClass]="_fightStats.memberStats[1].class"
+                [race]="_fightStats.memberStats[1].race"
+                [gender]="_fightStats.memberStats[1].gender"
+                [size]="64"
+                [spacing]="true"
+              />
+              {{ _fightStats.memberStats[1].name }}</span
+            >
+          </div>
+        </div>
+      } @else if (ARENA_TYPE_3v3_SOLO_QUEUE === _fightStats.fight.type) {
+        <div class="team-matchup mb-4">
+          <div class="team-name winner-team">
+            <div class="h2 d-flex flex-column align-items-end gap-2">
+              @for (member of winnerMembers(); track member.member_id) {
+                <div [class]="getFaction(member.race)">
+                  <app-player-icons [charClass]="member.class" [race]="member.race" [gender]="member.gender" [size]="48" [spacing]="true" />
+                  {{ member.name }}
+                </div>
+              }
+            </div>
+          </div>
+          <div class="vs-divider mx-5">vs</div>
+          <div class="team-name loser-team">
+            <div class="h2 d-flex flex-column align-items-start gap-2">
+              @for (member of loserMembers(); track member.member_id) {
+                <div [class]="getFaction(member.race)">
+                  <app-player-icons [charClass]="member.class" [race]="member.race" [gender]="member.gender" [size]="48" [spacing]="true" />
+                  {{ member.name }}
+                </div>
+              }
+            </div>
+          </div>
+        </div>
+      } @else {
+        <div class="team-matchup mb-4">
+          <div class="team-name winner-team" [class]="getFaction(_fightStats.fight.winner_captain_race)">
+            <div class="h2">
+              <img [width]="64" [height]="64" [src]="`assets/${_fightStats.fight.winner_faction}.png`" class="me-2" />
+              {{ _fightStats.fight.winner_team_name }}
+            </div>
+          </div>
+          <div class="vs-divider">vs</div>
+          <div class="team-name loser-team" [class]="getFaction(_fightStats.fight.loser_captain_race)">
+            <div class="h2">
+              {{ _fightStats.fight.loser_team_name }}
+              <img [width]="64" [height]="64" [src]="`assets/${_fightStats.fight.loser_faction}.png`" class="me-2" />
+            </div>
+          </div>
+        </div>
+      }
+      <div class="table-responsive">
+        <table class="table table-striped table-bordered">
+          <thead>
+            <tr>
+              <th>Time</th>
+              <th>Type</th>
+              <th>Duration</th>
+              <th>Winner TR</th>
+              <th>Winner MMR</th>
+              <th>Winner TR Change</th>
+              <th>Loser TR</th>
+              <th>Loser MMR</th>
+              <th>Loser TR Change</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>{{ _fightStats.fight.time | date: 'dd/MM/yyyy' }}</td>
+              <td>
+                @if (_fightStats.fight.type === ARENA_TYPE_3v3_SOLO_QUEUE) {
+                  3v3soloQ
+                } @else {
+                  {{ _fightStats.fight.type }}v{{ _fightStats.fight.type }}
+                }
+              </td>
+              <td>{{ formatDuration(_fightStats.fight.duration) }}</td>
+              <td [class]="_fightStats.fight.winner_faction">{{ _fightStats.fight.winner_tr }}</td>
+              <td [class]="_fightStats.fight.winner_faction">{{ _fightStats.fight.winner_mmr }}</td>
+              <td [class]="_fightStats.fight.winner_tr_change > 0 ? 'text-success' : 'text-danger'">
+                {{ _fightStats.fight.winner_tr_change > 0 ? '+' : '' }}{{ _fightStats.fight.winner_tr_change }}
+              </td>
+              <td [class]="_fightStats.fight.loser_faction">{{ _fightStats.fight.loser_tr }}</td>
+              <td [class]="_fightStats.fight.loser_faction">{{ _fightStats.fight.loser_mmr }}</td>
+              <td [class]="_fightStats.fight.loser_tr_change > 0 ? 'text-success' : 'text-danger'">
+                {{ _fightStats.fight.loser_tr_change > 0 ? '+' : '' }}{{ _fightStats.fight.loser_tr_change }}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="member-stats">
+      <h3>Member Statistics</h3>
+      <div class="table-responsive">
+        <table class="table table-striped table-bordered">
+          <thead>
+            <tr>
+              <th></th>
+              <th>Player</th>
+              @if (!isArena3v3Or1v1) {
+                <th>Team</th>
+              }
+              <th>Level</th>
+              <th>Damage</th>
+              <th>Healing</th>
+              <th>Killing Blows</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (member of winnerMembers().concat(loserMembers()); track member.member_id) {
+              <tr [class]="member.faction">
+                <td>
+                  @if (member.win) {
+                    <img [src]="'assets/ArenaPoints.png'" [popover]="'Winner'" triggers="mouseenter:mouseleave" />
+                  }
+                </td>
+                <td>
+                  <app-player-icons [charClass]="member.class" [race]="member.race" [gender]="member.gender" [spacing]="true" />
+                  <strong>{{ member.name }}</strong>
+                </td>
+                @if (!isArena3v3Or1v1) {
+                  <td>{{ member.team }}</td>
+                }
+                <td>{{ member.level }}</td>
+                <td>{{ member.damage }}</td>
+                <td>{{ member.heal }}</td>
+                <td>{{ member.kblows }}</td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    </div>
+  }
+</div>

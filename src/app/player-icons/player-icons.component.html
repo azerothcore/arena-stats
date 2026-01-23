@@ -1,2 +1,2 @@
-<img width="32" height="32" [src]="'assets/class/' + charClass() + '.png'" />
-<img width="32" height="32" [src]="'assets/race/' + race() + '-' + gender() + '.png'" />
+<img [width]="size()" [height]="size()" [class.mx-2]="spacing()" [src]="'assets/class/' + charClass() + '.png'" />
+<img [width]="size()" [height]="size()" [class.mx-2]="spacing()" [src]="'assets/race/' + race() + '-' + gender() + '.png'" />

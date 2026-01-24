@@ -1,17 +1,18 @@
 import { enableProdMode } from '@angular/core';
 
-import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { bootstrapApplication } from '@angular/platform-browser';
+import { provideAnimations } from '@angular/platform-browser/animations';
 import { provideRouter, withHashLocation } from '@angular/router';
 import { AppComponent } from './app/app.component';
 import { routes } from './app/app.routes';
+import { httpCacheInterceptor } from './app/interceptors/http-cache.interceptor';
 import { environment } from './environments/environment';
-import { provideAnimations } from '@angular/platform-browser/animations';
 
 if (environment.production) {
   enableProdMode();
 }
 
 bootstrapApplication(AppComponent, {
-  providers: [provideHttpClient(), provideRouter(routes, withHashLocation()), provideAnimations()],
+  providers: [provideHttpClient(withInterceptors([httpCacheInterceptor])), provideRouter(routes, withHashLocation()), provideAnimations()],
 }).catch((err) => console.error(err));

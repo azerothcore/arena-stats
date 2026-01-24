@@ -96,12 +96,14 @@
             <th>Time</th>
             <th>Type</th>
             <th>Level</th>
-            <th>Winner</th>
+            <th><img src="assets/ArenaPoints.png" /> Winner</th>
             <th>Loser</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody class="td-middle">
           @for (fight of arenaFights; track fight) {
+            @let isArena3v3Or1v1 = [ARENA_TYPE_3v3_SOLO_QUEUE, ARENA_TYPE_1v1].includes(fight.type);
+
             <tr (click)="navigateToFight(fight.fight_id)" style="cursor: pointer">
               <td>{{ fight.fight_id }}</td>
               <td>{{ fight.time | date: 'dd/MM/yyyy' }}</td>
@@ -109,34 +111,15 @@
                 {{ fight.type === ARENA_TYPE_3v3_SOLO_QUEUE ? '3v3soloQ' : `${fight.type}v${fight.type}` }}
               </td>
               <td>{{ [70, 80].includes(fight.level) ? fight.level : '71-79' }}</td>
-              <td [class]="getTeamFaction(fight.winner_members)" style="text-align: left" class="px-5">
-                @if (fight.type === ARENA_TYPE_1v1 || fight.type === ARENA_TYPE_3v3_SOLO_QUEUE) {
-                  @for (member of filterNullMembers(fight.winner_members); track member.name) {
-                    <app-player-icons [charClass]="member.class" [race]="member.race" [gender]="member.gender" class="mx-2" />
-                    <strong class="mx-1">{{ member.name }}</strong>
-                  }
-                } @else {
-                  @for (member of filterNullMembers(fight.winner_members); track member.name) {
-                    <app-player-icons [charClass]="member.class" [race]="member.race" [gender]="member.gender" class="mx-2" />
-                  }
 
-                  <strong class="mx-3">{{ fight.winner_name }}</strong>
-                }
-              </td>
-              <td [class]="getTeamFaction(fight.loser_members)" style="text-align: left" class="px-5">
-                @if (fight.type === ARENA_TYPE_1v1 || fight.type === ARENA_TYPE_3v3_SOLO_QUEUE) {
-                  @for (member of filterNullMembers(fight.loser_members); track member.name) {
-                    <app-player-icons [charClass]="member.class" [race]="member.race" [gender]="member.gender" class="mx-2" />
-                    <strong class="mx-1">{{ member.name }}</strong>
+              @for (members of [fight.winner_members, fight.loser_members]; track members) {
+                <td [class]="getTeamFaction(members)" style="text-align: left" class="px-5">
+                  <app-detailed-score-member [members]="members" [showName]="isArena3v3Or1v1" />
+                  @if (!isArena3v3Or1v1) {
+                    <strong class="mx-3">{{ $index === 0 ? fight.winner_name : fight.loser_name }}</strong>
                   }
-                } @else {
-                  @for (member of filterNullMembers(fight.loser_members); track member.name) {
-                    <app-player-icons [charClass]="member.class" [race]="member.race" [gender]="member.gender" class="mx-2" />
-                  }
-
-                  <strong class="mx-3">{{ fight.loser_name }}</strong>
-                }
-              </td>
+                </td>
+              }
             </tr>
           }
         </tbody>

@@ -1,0 +1,8 @@
+@for (member of members(); track member.name) {
+  <div style="display: inline-block">
+    <app-player-icons [charClass]="member.class" [race]="member.race" [gender]="member.gender" class="mx-2" />
+    @if (showName()) {
+      <strong class="mx-1">{{ member.name }}</strong>
+    }
+  </div>
+}

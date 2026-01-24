@@ -5,6 +5,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { API_URL } from 'config';
+import { DetailedScoreMemberComponent } from '../detailed-score-member/detailed-score-member.component';
 import { PlayerIconComponent } from '../player-icons/player-icons.component';
 import { ArenaFightLog } from '../types/arena-fight-log.interface';
 import { ArenaFightMember } from '../types/arena-fight-member.interface';
@@ -15,7 +16,7 @@ import { getFaction } from '../utils/get-faction';
   selector: 'app-detailed-score',
   templateUrl: './detailed-score.component.html',
   styleUrls: ['./detailed-score.component.scss'],
-  imports: [DatePipe, PlayerIconComponent, FormsModule],
+  imports: [DatePipe, PlayerIconComponent, FormsModule, DetailedScoreMemberComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DetailedScoreComponent implements OnInit {
@@ -114,14 +115,9 @@ export class DetailedScoreComponent implements OnInit {
     this.applyFilters();
   }
 
-  protected filterNullMembers(members: (ArenaFightMember | null)[]): ArenaFightMember[] {
-    return members.filter((member): member is ArenaFightMember => member !== null);
-  }
-
-  protected getTeamFaction(members: (ArenaFightMember | null)[]): string {
-    const validMembers = this.filterNullMembers(members);
-    if (validMembers.length > 0) {
-      return getFaction(validMembers[0].race);
+  protected getTeamFaction(members: ArenaFightMember[]): string {
+    if (members.length > 0) {
+      return getFaction(members[0]!.race);
     }
     return '';
   }

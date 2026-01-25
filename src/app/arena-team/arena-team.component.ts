@@ -27,7 +27,6 @@ import { ArenaTeamService } from './arena-team.service';
 export class ArenaTeamComponent implements AfterViewInit {
   readonly arenaTabset = viewChild<TabsetComponent>('arenaTabset');
 
-  private readonly LAST_TAB_KEY = 'arena-team-last-tab';
   private readonly lastTabSignal = signal<string | null>(this.getStoredTab());
 
   protected readonly service: ArenaTeamService = inject(ArenaTeamService);
@@ -38,6 +37,7 @@ export class ArenaTeamComponent implements AfterViewInit {
     ENABLE_3V3_SOLO_QUEUE ? { tabName: '3v3soloQ', arenaType: ARENA_TYPE_3v3_SOLO_QUEUE, solo: true } : {},
     { tabName: '5v5', arenaType: 5 },
   ].filter((t) => t.hasOwnProperty('tabName'));
+  private readonly LAST_TAB_KEY = this.teams[0].tabName;
 
   protected readonly afterViewInit = signal(false);
 

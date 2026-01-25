@@ -27,8 +27,6 @@ export class DetailedScoreComponent implements OnInit {
   protected filterYear = signal<number | null>(null);
   protected filterMonth = signal<number | null>(null);
   protected filterLimit = signal<number | null>(null);
-  protected filterMinLevel = signal<number | null>(null);
-  protected filterMaxLevel = signal<number | null>(null);
 
   private readonly http = inject(HttpClient);
   private readonly router = inject(Router);
@@ -59,12 +57,6 @@ export class DetailedScoreComponent implements OnInit {
     if (this.filterLimit() !== null) {
       params = params.set('limit', this.filterLimit()!.toString());
     }
-    if (this.filterMinLevel() !== null) {
-      params = params.set('minLevel', this.filterMinLevel()!.toString());
-    }
-    if (this.filterMaxLevel() !== null) {
-      params = params.set('maxLevel', this.filterMaxLevel()!.toString());
-    }
 
     this.http
       .get<ArenaFightLog[]>(`${API_URL}/characters/log_arena_fights`, { params })
@@ -91,27 +83,7 @@ export class DetailedScoreComponent implements OnInit {
     this.filterYear.set(null);
     this.filterMonth.set(null);
     this.filterLimit.set(null);
-    this.filterMinLevel.set(null);
-    this.filterMaxLevel.set(null);
     this.fetchArenaFights();
-  }
-
-  protected onLevelFilterChange(value: string): void {
-    if (!value) {
-      this.filterMinLevel.set(null);
-      this.filterMaxLevel.set(null);
-    } else if (value === '80') {
-      this.filterMinLevel.set(80);
-      this.filterMaxLevel.set(80);
-    } else if (value === '71-79') {
-      this.filterMinLevel.set(71);
-      this.filterMaxLevel.set(79);
-    } else if (value === '70') {
-      this.filterMinLevel.set(70);
-      this.filterMaxLevel.set(70);
-    }
-
-    this.applyFilters();
   }
 
   protected getTeamFaction(members: ArenaFightMember[]): string {

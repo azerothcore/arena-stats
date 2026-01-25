@@ -24,15 +24,6 @@
         </select>
       </div>
       <div class="col-md-2">
-        <label for="levelFilter" class="form-label">Level</label>
-        <select id="levelFilter" class="form-select" #levelSelect (change)="onLevelFilterChange(levelSelect.value)">
-          <option value="">All Levels</option>
-          <option value="80">80</option>
-          <option value="71-79">71-79</option>
-          <option value="70">70</option>
-        </select>
-      </div>
-      <div class="col-md-2">
         <label for="yearFilter" class="form-label">Year</label>
         <input
           type="number"
@@ -95,7 +86,6 @@
             <th>#</th>
             <th>Time</th>
             <th>Type</th>
-            <th>Level</th>
             <th><img src="assets/ArenaPoints.png" /> Winner</th>
             <th>Loser</th>
           </tr>
@@ -110,8 +100,6 @@
               <td>
                 {{ fight.type === ARENA_TYPE_3v3_SOLO_QUEUE ? '3v3soloQ' : `${fight.type}v${fight.type}` }}
               </td>
-              <td>{{ [70, 80].includes(fight.level) ? fight.level : '71-79' }}</td>
-
               @for (members of [fight.winner_members, fight.loser_members]; track members) {
                 <td [class]="getTeamFaction(members)" style="text-align: left" class="px-5">
                   <app-detailed-score-member [members]="members" [showName]="isArena3v3Or1v1" />

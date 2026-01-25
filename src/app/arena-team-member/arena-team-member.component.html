@@ -7,7 +7,7 @@
     <h2 class="h2 text-center">
       @if ([ARENA_TYPE_1v1, ARENA_TYPE_3v3_SOLO_QUEUE].includes(teamDetails.type)) {
         <app-player-icons
-          [charClass]="teamDetails.captainRace"
+          [charClass]="teamDetails.captainClass"
           [race]="teamDetails.captainRace"
           [gender]="teamDetails.captainGender"
           [size]="64"

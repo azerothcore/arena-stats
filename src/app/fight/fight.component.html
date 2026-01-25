@@ -15,7 +15,7 @@
   @let _loading = loading();
   @let _error = error();
   @let _fightStats = fightStats();
-  @let isArena3v3Or1v1 = [ARENA_TYPE_3v3_SOLO_QUEUE, ARENA_TYPE_1v1].includes(_fightStats.fight.type);
+  @let isArena3v3Or1v1 = [ARENA_TYPE_3v3_SOLO_QUEUE, ARENA_TYPE_1v1].includes(_fightStats?.fight.type);
 
   @if (_loading) {
     <div class="loading">Loading fight statistics...</div>
@@ -115,7 +115,7 @@
           </thead>
           <tbody>
             <tr>
-              <td>{{ _fightStats.fight.time | date: 'HH:mm:ss dd/MM/yyyy' }}</td>
+              <td>{{ _fightStats.fight.time | date: 'dd/MM/yyyy HH:mm:ss' }}</td>
               <td>
                 @if (_fightStats.fight.type === ARENA_TYPE_3v3_SOLO_QUEUE) {
                   3v3soloQ

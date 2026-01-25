@@ -2,19 +2,20 @@
 
 <app-search-player />
 
-<br />
-
 <div>
-  <tabset>
-    <!-- <tab heading="Top arena rated" id="top-arena-rated"> test </tab> -->
+  <tabset #arenaTabset>
+    <tab heading="Top Arena Rated" id="top-arena-rated" (selectTab)="onTabChange($event.id)">
+      <app-top-arena-rated />
+    </tab>
+
     @for (team of teams; track $index) {
-      <tab [heading]="team.tabName" [id]="team.tabName">
+      <tab [heading]="team.tabName" [id]="team.tabName" (selectTab)="onTabChange($event.id)">
         <app-arena-team-tab [teams]="service.teams$[team.arenaType] | async" [isSolo]="team?.solo" />
       </tab>
     }
 
     @if (afterViewInit()) {
-      <tab heading="Detailed Score" id="detailed-score">
+      <tab heading="Detailed Score" id="detailed-score" (selectTab)="onTabChange($event.id)">
         <app-detailed-score />
       </tab>
     }

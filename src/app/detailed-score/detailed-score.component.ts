@@ -6,7 +6,6 @@ import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { API_URL } from 'config';
 import { DetailedScoreMemberComponent } from '../detailed-score-member/detailed-score-member.component';
-import { PlayerIconComponent } from '../player-icons/player-icons.component';
 import { ArenaFightLog } from '../types/arena-fight-log.interface';
 import { ArenaFightMember } from '../types/arena-fight-member.interface';
 import { ARENA_TYPE_1v1, ARENA_TYPE_3v3_SOLO_QUEUE } from '../utils/arena-type';
@@ -16,7 +15,7 @@ import { getFaction } from '../utils/get-faction';
   selector: 'app-detailed-score',
   templateUrl: './detailed-score.component.html',
   styleUrls: ['./detailed-score.component.scss'],
-  imports: [DatePipe, PlayerIconComponent, FormsModule, DetailedScoreMemberComponent],
+  imports: [DatePipe, FormsModule, DetailedScoreMemberComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DetailedScoreComponent implements OnInit {

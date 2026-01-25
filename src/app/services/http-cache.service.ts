@@ -9,7 +9,7 @@ export interface CacheEntry {
   providedIn: 'root',
 })
 export class HttpCacheService {
-  private readonly CACHE_DURATION = 30 * 60 * 1000; // 30 minutes in milliseconds
+  private readonly CACHE_DURATION = 5 * 60 * 1000; // 5 minutes in milliseconds
   private readonly CACHE_PREFIX = 'http_cache_';
 
   /**

@@ -27,3 +27,15 @@ table tr {
 table tr:hover {
   background-color: rgba(255, 255, 255, 0.2) !important;
 }
+
+.arrow-toggle {
+  cursor: pointer;
+  display: inline-block;
+  font-size: 1.2rem;
+  transition: transform 0.3s ease;
+  user-select: none;
+
+  &.expanded {
+    transform: rotate(180deg);
+  }
+}

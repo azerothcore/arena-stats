@@ -1,0 +1,125 @@
+@let _loading = loading();
+@let _error = error();
+@let _players = players();
+
+<div class="mt-2">
+  <div class="filters mb-3">
+    <div class="row g-3">
+      <div class="col-md-3">
+        <label for="yearFilter" class="form-label">Year</label>
+        <input
+          type="number"
+          id="yearFilter"
+          class="form-control"
+          [(ngModel)]="filterYear"
+          (change)="applyFilters()"
+          placeholder="e.g., 2026"
+          min="2000"
+          max="2100"
+        />
+      </div>
+      <div class="col-md-3">
+        <label for="monthFilter" class="form-label">Month</label>
+        <select id="monthFilter" class="form-select" [(ngModel)]="filterMonth" (change)="applyFilters()">
+          <option [ngValue]="1">January</option>
+          <option [ngValue]="2">February</option>
+          <option [ngValue]="3">March</option>
+          <option [ngValue]="4">April</option>
+          <option [ngValue]="5">May</option>
+          <option [ngValue]="6">June</option>
+          <option [ngValue]="7">July</option>
+          <option [ngValue]="8">August</option>
+          <option [ngValue]="9">September</option>
+          <option [ngValue]="10">October</option>
+          <option [ngValue]="11">November</option>
+          <option [ngValue]="12">December</option>
+        </select>
+      </div>
+      <div class="col-md-3 d-flex align-items-end">
+        <button type="button" class="btn btn-secondary" (click)="clearFilters()">Clear Filters</button>
+      </div>
+    </div>
+  </div>
+
+  @if (_loading) {
+    <div class="loading text-center py-5">
+      <div class="spinner-border" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+      <p class="mt-2">Loading top arena players...</p>
+    </div>
+  }
+
+  @if (_error) {
+    <div class="alert alert-danger" role="alert">
+      {{ _error }}
+    </div>
+  }
+
+  @if (!_loading && !_error && _players.length === 0) {
+    <div class="alert" role="alert">No players found for the selected filters.</div>
+  }
+
+  @if (!_loading && !_error && _players.length > 0) {
+    <div class="table-responsive">
+      <table class="table table-striped table-hover table-bordered">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Player</th>
+            <th scope="col">Level</th>
+            <th scope="col">Games</th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (player of _players; track player.character.guid; let i = $index) {
+            <tr
+              class="h5"
+              [class]="getFaction(player.character.race)"
+              [style]="
+                isPlayerExpanded(player.character.guid)
+                  ? 'border-width: 2px !important; border-top: 2px solid rgba(255,255,255,0.3) !important;'
+                  : ''
+              "
+            >
+              <td class="">{{ getRank(i) }}</td>
+              <td (click)="navigateToPlayer(player)" class="player-name">
+                <div class="d-flex align-items-center">
+                  <app-player-icons
+                    [charClass]="player.character.class"
+                    [race]="player.character.race"
+                    [gender]="player.character.gender"
+                    [size]="32"
+                  />
+                  <span class="ms-3">{{ player.character.name }}</span>
+                </div>
+              </td>
+              <td>{{ player.character.level }}</td>
+              <td>
+                <strong>{{ player.totalGames }}</strong>
+              </td>
+              <td class="details" (click)="togglePlayerDetails(player.character.guid, $event)">
+                <span class="arrow-toggle" [class.expanded]="isPlayerExpanded(player.character.guid)"> ▼ </span>
+              </td>
+            </tr>
+            @if (isPlayerExpanded(player.character.guid)) {
+              @for (gameType of player.gamesByType; track gameType.type) {
+                <tr [style]="$index === player.gamesByType.length - 1 ? 'border-bottom: 1px solid rgba(255,255,255,0.3)' : ''">
+                  <td colspan="2"></td>
+                  <td>{{ gameType.type === ARENA_TYPE_3v3_SOLO_QUEUE ? '3v3SoloQ' : `${gameType.type}v${gameType.type}` }}</td>
+                  <td>
+                    <strong>{{ gameType.game }}</strong>
+                  </td>
+                  <td>
+                    <img [width]="24" [height]="24" src="assets/ArenaPoints.png" />
+                  </td>
+                </tr>
+              }
+            }
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+</div>

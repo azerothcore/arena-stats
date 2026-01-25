@@ -106,7 +106,7 @@
 
             <tr (click)="navigateToFight(fight.fight_id)" style="cursor: pointer">
               <td>{{ fight.fight_id }}</td>
-              <td>{{ fight.time | date: 'HH:mm dd/MM/yyyy' }}</td>
+              <td>{{ fight.time | date: 'dd/MM/yyyy HH:mm:ss' }}</td>
               <td>
                 {{ fight.type === ARENA_TYPE_3v3_SOLO_QUEUE ? '3v3soloQ' : `${fight.type}v${fight.type}` }}
               </td>

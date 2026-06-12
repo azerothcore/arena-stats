@@ -13,7 +13,7 @@
       <th class="text-center">Week Wins</th>
     </thead>
     <tbody>
-      @for (team of teams(); track $index) {
+      @for (team of pagedTeams(); track $index) {
         <tr [class]="team.faction" (click)="service.showTeam(team.arenaTeamId)">
           <td>
             <strong>{{ team.rank }}</strong>
@@ -50,3 +50,17 @@
     </tbody>
   </table>
 </div>
+
+@if (totalItems() > pageSize) {
+  <div class="d-flex justify-content-center">
+    <pagination
+      [totalItems]="totalItems()"
+      [itemsPerPage]="pageSize"
+      [ngModel]="currentPage()"
+      (pageChanged)="onPageChanged($event)"
+      [maxSize]="5"
+      [rotate]="true"
+      [boundaryLinks]="true"
+    />
+  </div>
+}

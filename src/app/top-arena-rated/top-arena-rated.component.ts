@@ -4,9 +4,13 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { API_URL } from 'config';
+import { PageChangedEvent, PaginationComponent } from 'ngx-bootstrap/pagination';
 import { PlayerIconComponent } from '../player-icons/player-icons.component';
+import { Paginated } from '../types/paginated.interface';
 import { ARENA_TYPE_3v3_SOLO_QUEUE } from '../utils/arena-type';
 import { getFaction } from '../utils/get-faction';
+
+const PAGE_SIZE = 20;
 
 interface Character {
   guid: number;
@@ -32,7 +36,7 @@ interface TopArenaPlayer {
   selector: 'app-top-arena-rated',
   templateUrl: './top-arena-rated.component.html',
   styleUrls: ['./top-arena-rated.component.scss'],
-  imports: [FormsModule, PlayerIconComponent],
+  imports: [FormsModule, PlayerIconComponent, PaginationComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TopArenaRatedComponent implements OnInit {
@@ -43,6 +47,10 @@ export class TopArenaRatedComponent implements OnInit {
 
   protected filterYear = signal<number | null>(new Date().getFullYear());
   protected filterMonth = signal<number | null>(new Date().getMonth() + 1);
+
+  protected readonly currentPage = signal(1);
+  protected readonly totalItems = signal(0);
+  protected readonly pageSize = PAGE_SIZE;
 
   private readonly http = inject(HttpClient);
   private readonly router = inject(Router);
@@ -59,7 +67,7 @@ export class TopArenaRatedComponent implements OnInit {
     this.loading.set(true);
     this.error.set(null);
 
-    let params = new HttpParams().set('excludeType', '1');
+    let params = new HttpParams().set('excludeType', '1').set('page', this.currentPage().toString()).set('limit', PAGE_SIZE.toString());
 
     if (this.filterYear() !== null) {
       params = params.set('year', this.filterYear()!.toString());
@@ -69,11 +77,12 @@ export class TopArenaRatedComponent implements OnInit {
     }
 
     this.http
-      .get<TopArenaPlayer[]>(`${API_URL}/characters/players_monthly_games`, { params })
+      .get<Paginated<TopArenaPlayer>>(`${API_URL}/characters/players_monthly_games`, { params })
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
-        next: (data) => {
-          this.players.set(data);
+        next: (response) => {
+          this.players.set(response.data);
+          this.totalItems.set(response.total);
           this.loading.set(false);
         },
         error: (err) => {
@@ -85,12 +94,22 @@ export class TopArenaRatedComponent implements OnInit {
   }
 
   protected applyFilters(): void {
+    this.currentPage.set(1);
     this.fetchPlayers();
   }
 
   protected clearFilters(): void {
     this.filterYear.set(null);
     this.filterMonth.set(null);
+    this.currentPage.set(1);
+    this.fetchPlayers();
+  }
+
+  protected onPageChanged(event: PageChangedEvent): void {
+    if (event.page === this.currentPage()) {
+      return;
+    }
+    this.currentPage.set(event.page);
     this.fetchPlayers();
   }
 
@@ -99,9 +118,10 @@ export class TopArenaRatedComponent implements OnInit {
   }
 
   protected getRank(index: number): number {
+    const pageOffset = (this.currentPage() - 1) * PAGE_SIZE;
     const currentPlayer = this.players()[index];
     if (index === 0) {
-      return 1;
+      return pageOffset + 1;
     }
 
     const previousPlayer = this.players()[index - 1];
@@ -109,7 +129,7 @@ export class TopArenaRatedComponent implements OnInit {
       return this.getRank(index - 1);
     }
 
-    return index + 1;
+    return pageOffset + index + 1;
   }
 
   protected togglePlayerDetails(guid: number, event: Event): void {

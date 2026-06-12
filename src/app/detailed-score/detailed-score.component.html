@@ -55,7 +55,7 @@
         </select>
       </div>
       <div class="col-md-2">
-        <label for="limitFilter" class="form-label">Display</label>
+        <label for="limitFilter" class="form-label">Per page</label>
         <input
           type="number"
           id="limitFilter"
@@ -113,5 +113,19 @@
         </tbody>
       </table>
     </div>
+
+    @if (totalItems() > pageSize()) {
+      <div class="d-flex justify-content-center">
+        <pagination
+          [totalItems]="totalItems()"
+          [itemsPerPage]="pageSize()"
+          [ngModel]="currentPage()"
+          (pageChanged)="onPageChanged($event)"
+          [maxSize]="5"
+          [rotate]="true"
+          [boundaryLinks]="true"
+        />
+      </div>
+    }
   }
 </div>

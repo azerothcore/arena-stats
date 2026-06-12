@@ -121,5 +121,19 @@
         </tbody>
       </table>
     </div>
+
+    @if (totalItems() > pageSize) {
+      <div class="d-flex justify-content-center">
+        <pagination
+          [totalItems]="totalItems()"
+          [itemsPerPage]="pageSize"
+          [ngModel]="currentPage()"
+          (pageChanged)="onPageChanged($event)"
+          [maxSize]="5"
+          [rotate]="true"
+          [boundaryLinks]="true"
+        />
+      </div>
+    }
   }
 </div>

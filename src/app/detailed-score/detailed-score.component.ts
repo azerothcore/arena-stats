@@ -1,21 +1,25 @@
 import { DatePipe } from '@angular/common';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { ChangeDetectionStrategy, Component, DestroyRef, inject, OnInit, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, DestroyRef, inject, OnInit, signal } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { API_URL } from 'config';
+import { PageChangedEvent, PaginationComponent } from 'ngx-bootstrap/pagination';
 import { DetailedScoreMemberComponent } from '../detailed-score-member/detailed-score-member.component';
 import { ArenaFightLog } from '../types/arena-fight-log.interface';
 import { ArenaFightMember } from '../types/arena-fight-member.interface';
+import { Paginated } from '../types/paginated.interface';
 import { ARENA_TYPE_1v1, ARENA_TYPE_3v3_SOLO_QUEUE } from '../utils/arena-type';
 import { getFaction } from '../utils/get-faction';
+
+const DEFAULT_PAGE_SIZE = 20;
 
 @Component({
   selector: 'app-detailed-score',
   templateUrl: './detailed-score.component.html',
   styleUrls: ['./detailed-score.component.scss'],
-  imports: [DatePipe, FormsModule, DetailedScoreMemberComponent],
+  imports: [DatePipe, FormsModule, DetailedScoreMemberComponent, PaginationComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DetailedScoreComponent implements OnInit {
@@ -27,6 +31,10 @@ export class DetailedScoreComponent implements OnInit {
   protected filterYear = signal<number | null>(null);
   protected filterMonth = signal<number | null>(null);
   protected filterLimit = signal<number | null>(null);
+
+  protected currentPage = signal(1);
+  protected totalItems = signal(0);
+  protected pageSize = computed(() => this.filterLimit() ?? DEFAULT_PAGE_SIZE);
 
   private readonly http = inject(HttpClient);
   private readonly router = inject(Router);
@@ -43,7 +51,7 @@ export class DetailedScoreComponent implements OnInit {
     this.loading.set(true);
     this.error = null;
 
-    let params = new HttpParams();
+    let params = new HttpParams().set('page', this.currentPage().toString());
 
     if (this.filterType() !== null) {
       params = params.set('type', this.filterType()!.toString());
@@ -59,11 +67,12 @@ export class DetailedScoreComponent implements OnInit {
     }
 
     this.http
-      .get<ArenaFightLog[]>(`${API_URL}/characters/log_arena_fights`, { params })
+      .get<Paginated<ArenaFightLog>>(`${API_URL}/characters/log_arena_fights`, { params })
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
-        next: (data) => {
-          this.arenaFights = data;
+        next: (response) => {
+          this.arenaFights = response.data;
+          this.totalItems.set(response.total);
           this.loading.set(false);
         },
         error: (err) => {
@@ -75,6 +84,7 @@ export class DetailedScoreComponent implements OnInit {
   }
 
   protected applyFilters(): void {
+    this.currentPage.set(1);
     this.fetchArenaFights();
   }
 
@@ -83,6 +93,15 @@ export class DetailedScoreComponent implements OnInit {
     this.filterYear.set(null);
     this.filterMonth.set(null);
     this.filterLimit.set(null);
+    this.currentPage.set(1);
+    this.fetchArenaFights();
+  }
+
+  protected onPageChanged(event: PageChangedEvent): void {
+    if (event.page === this.currentPage()) {
+      return;
+    }
+    this.currentPage.set(event.page);
     this.fetchArenaFights();
   }
 

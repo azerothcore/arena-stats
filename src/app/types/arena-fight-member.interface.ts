@@ -3,4 +3,8 @@ export interface ArenaFightMember {
   race: number;
   class: number;
   gender: number;
+  level: number;
+  damage: number;
+  heal: number;
+  kblows: number;
 }

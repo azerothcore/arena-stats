@@ -5,6 +5,7 @@ import { PopoverModule } from 'ngx-bootstrap/popover';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { PlayerIconComponent } from '../player-icons/player-icons.component';
+import { TeamFightHistoryComponent } from '../team-fight-history/team-fight-history.component';
 import { ARENA_TYPE_1v1, ARENA_TYPE_3v3_SOLO_QUEUE } from '../utils/arena-type';
 import { getNextArenaPoints } from '../utils/get-arena-points';
 import { ArenaTeamMemberService } from './arena-team-member.service';
@@ -14,7 +15,7 @@ import { ArenaTeamMemberService } from './arena-team-member.service';
   templateUrl: './arena-team-member.component.html',
   styleUrls: ['./arena-team-member.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [AsyncPipe, PlayerIconComponent, PopoverModule],
+  imports: [AsyncPipe, PlayerIconComponent, PopoverModule, TeamFightHistoryComponent],
 })
 export class ArenaTeamMemberComponent implements OnInit {
   protected readonly service: ArenaTeamMemberService = inject(ArenaTeamMemberService);

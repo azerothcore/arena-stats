@@ -225,7 +225,11 @@
         </table>
       </div>
 
-      <app-team-fight-history [teamId]="teamDetails.arenaTeamId" />
+      <app-team-fight-history
+        [teamId]="teamDetails.arenaTeamId"
+        [isSolo]="teamDetails.type === ARENA_TYPE_3v3_SOLO_QUEUE"
+        [playerGuid]="teamDetails.captainGuid"
+      />
     </div>
   </div>
 }

@@ -1,4 +1,5 @@
 export interface ArenaFightMember {
+  guid: number;
   name: string;
   race: number;
   class: number;

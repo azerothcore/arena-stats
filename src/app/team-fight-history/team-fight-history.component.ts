@@ -24,6 +24,10 @@ const PAGE_SIZE = 20;
 })
 export class TeamFightHistoryComponent {
   readonly teamId = input.required<number>();
+  // 3v3 solo queue fights aren't tied to a persistent arena team, so history is
+  // queried by the captain's character guid instead of teamId.
+  readonly isSolo = input<boolean>(false);
+  readonly playerGuid = input<number>();
 
   protected readonly fights = signal<ArenaTeamFight[]>([]);
   protected readonly loading = signal(true);
@@ -53,10 +57,13 @@ export class TeamFightHistoryComponent {
     this.loading.set(true);
     this.error.set(null);
 
-    const params = new HttpParams()
-      .set('teamId', this.teamId().toString())
-      .set('page', this.currentPage().toString())
-      .set('limit', PAGE_SIZE.toString());
+    let params = new HttpParams().set('page', this.currentPage().toString()).set('limit', PAGE_SIZE.toString());
+
+    if (this.isSolo()) {
+      params = params.set('playerGuid', this.playerGuid()!.toString()).set('type', this.ARENA_TYPE_3v3_SOLO_QUEUE.toString());
+    } else {
+      params = params.set('teamId', this.teamId().toString());
+    }
 
     this.http
       .get<Paginated<ArenaFightLog>>(`${API_URL}/characters/log_arena_fights`, { params })
@@ -76,7 +83,12 @@ export class TeamFightHistoryComponent {
   }
 
   private toTeamPerspective(fight: ArenaFightLog): ArenaTeamFight {
-    const won = fight.winner === this.teamId();
+    const winnerMembers = fight.winner_members.filter((member): member is ArenaFightMember => member !== null);
+    const loserMembers = fight.loser_members.filter((member): member is ArenaFightMember => member !== null);
+
+    // For solo queue, laf.winner/loser are ephemeral team ids unrelated to teamId,
+    // so the side is identified by which roster contains the queried player.
+    const won = this.isSolo() ? winnerMembers.some((member) => member.guid === this.playerGuid()) : fight.winner === this.teamId();
 
     return {
       fight_id: fight.fight_id,
@@ -89,8 +101,8 @@ export class TeamFightHistoryComponent {
       rating_change: won ? fight.winner_tr_change : fight.loser_tr_change,
       opponent_id: won ? fight.loser : fight.winner,
       opponent_name: won ? fight.loser_name : fight.winner_name,
-      team_members: (won ? fight.winner_members : fight.loser_members).filter((member) => member !== null),
-      opponent_members: (won ? fight.loser_members : fight.winner_members).filter((member) => member !== null),
+      team_members: won ? winnerMembers : loserMembers,
+      opponent_members: won ? loserMembers : winnerMembers,
     };
   }
 
@@ -124,6 +136,11 @@ export class TeamFightHistoryComponent {
   }
 
   protected navigateToOpponent(fight: ArenaTeamFight, event: Event): void {
+    // Solo queue opponents have no persistent team page; fall through to the row's
+    // fight-detail navigation instead.
+    if (this.isSolo()) {
+      return;
+    }
     event.stopPropagation();
     this.router.navigate(['/team', fight.opponent_id]);
   }

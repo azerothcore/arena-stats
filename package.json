@@ -53,5 +53,13 @@
     "ts-node": "7.0.0",
     "tslint": "6.1.0",
     "typescript": "6.0.3"
+  },
+  "overrides": {
+    "ngx-bootstrap": {
+      "@angular/animations": "$@angular/animations",
+      "@angular/common": "$@angular/common",
+      "@angular/core": "$@angular/core",
+      "@angular/forms": "$@angular/forms"
+    }
   }
 }

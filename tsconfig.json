@@ -5,7 +5,10 @@
   },
   "compileOnSave": false,
   "compilerOptions": {
-    "baseUrl": "./",
+    "strict": false,
+    "paths": {
+      "config": ["./config"]
+    },
     "outDir": "./dist/out-tsc",
     "sourceMap": true,
     "esModuleInterop": true,

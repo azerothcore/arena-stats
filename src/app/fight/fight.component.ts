@@ -1,6 +1,6 @@
 import { DatePipe } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
-import { Component, computed, DestroyRef, effect, inject, signal } from '@angular/core';
+import { Component, computed, DestroyRef, effect, inject, signal, ChangeDetectionStrategy } from '@angular/core';
 import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, Router } from '@angular/router';
 import { API_URL } from 'config';
@@ -16,6 +16,7 @@ import { getFaction } from '../utils/get-faction';
   selector: 'app-fight',
   templateUrl: './fight.component.html',
   styleUrls: ['./fight.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [DatePipe, PlayerIconComponent, PopoverModule],
 })
 export class FightComponent {

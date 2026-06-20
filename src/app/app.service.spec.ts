@@ -1,20 +1,20 @@
-import { provideHttpClient, withInterceptorsFromDi } from "@angular/common/http";
-import { HttpTestingController, provideHttpClientTesting } from "@angular/common/http/testing";
-import { TestBed, getTestBed, waitForAsync } from "@angular/core/testing";
+import { provideHttpClient, withInterceptorsFromDi, withXhr } from '@angular/common/http';
+import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
+import { TestBed, getTestBed, waitForAsync } from '@angular/core/testing';
 
-import { API_URL } from "config";
-import { AppService } from "./app.service";
-import { Worldstate } from "./types/worldstate.type";
+import { API_URL } from 'config';
+import { AppService } from './app.service';
+import { Worldstate } from './types/worldstate.type';
 
-describe("AppService", () => {
+describe('AppService', () => {
   let httpMock: HttpTestingController;
   let injector: TestBed;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-    imports: [],
-    providers: [provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
-}).compileComponents();
+      imports: [],
+      providers: [provideHttpClient(withXhr(), withInterceptorsFromDi()), provideHttpClientTesting()],
+    }).compileComponents();
 
     injector = getTestBed();
     httpMock = injector.inject(HttpTestingController);
@@ -24,24 +24,20 @@ describe("AppService", () => {
     httpMock.verify();
   });
 
-  it("should load arena time dist. and get arena time dist correctly works", () => {
+  it('should load arena time dist. and get arena time dist correctly works', () => {
     const service: AppService = TestBed.inject(AppService);
     const mockData: Worldstate[] = [
       {
         entry: 20001,
         value: 1454691600,
-        comment: "NextArenaPointDistributionTime",
+        comment: 'NextArenaPointDistributionTime',
       },
     ];
 
-    service.nextArenaPointsDistributionTime$.subscribe((data) =>
-      expect(data).toEqual(mockData[0].value)
-    );
+    service.nextArenaPointsDistributionTime$.subscribe((data) => expect(data).toEqual(mockData[0].value));
 
-    const req = httpMock.expectOne(
-      `${API_URL}/characters/search/worldstates?comment=NextArenaPointDistributionTime`
-    );
-    expect(req.request.method).toBe("GET");
+    const req = httpMock.expectOne(`${API_URL}/characters/search/worldstates?comment=NextArenaPointDistributionTime`);
+    expect(req.request.method).toBe('GET');
     req.flush(mockData);
   });
 });

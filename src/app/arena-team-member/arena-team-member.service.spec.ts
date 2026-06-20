@@ -11,7 +11,7 @@ import { ArenaTeam } from '../types/arena-team.type';
 import { getFaction } from '../utils/get-faction';
 import { ArenaTeamMemberComponent } from './arena-team-member.component';
 import { ArenaTeamMemberService } from './arena-team-member.service';
-import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi, withXhr } from '@angular/common/http';
 
 describe('ArenaTeamMemberService', () => {
   let httpMock: HttpTestingController;
@@ -20,9 +20,13 @@ describe('ArenaTeamMemberService', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-    imports: [TabsModule, RouterTestingModule, ArenaTeamMemberComponent],
-    providers: [{ provide: Router, useValue: router }, provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
-}).compileComponents();
+      imports: [TabsModule, RouterTestingModule, ArenaTeamMemberComponent],
+      providers: [
+        { provide: Router, useValue: router },
+        provideHttpClient(withXhr(), withInterceptorsFromDi()),
+        provideHttpClientTesting(),
+      ],
+    }).compileComponents();
 
     injector = getTestBed();
     httpMock = injector.inject(HttpTestingController);

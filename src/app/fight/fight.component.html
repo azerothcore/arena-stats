@@ -1,5 +1,5 @@
-@let fight_prev = fightStats()?.fight_id_previous;
-@let fight_next = fightStats()?.fight_id_next;
+@let fight_prev = $safeNavigationMigration(fightStats()?.fight_id_previous);
+@let fight_next = $safeNavigationMigration(fightStats()?.fight_id_next);
 
 <div>
   <button class="btn btn-primary mx-3" (click)="fight_prev ? goToFight(fight_prev) : ''" [disabled]="!fightStats()?.fight_id_previous">
@@ -15,7 +15,7 @@
   @let _loading = loading();
   @let _error = error();
   @let _fightStats = fightStats();
-  @let isArena3v3Or1v1 = [ARENA_TYPE_3v3_SOLO_QUEUE, ARENA_TYPE_1v1].includes(_fightStats?.fight.type);
+  @let isArena3v3Or1v1 = [ARENA_TYPE_3v3_SOLO_QUEUE, ARENA_TYPE_1v1].includes($safeNavigationMigration(_fightStats?.fight.type));
 
   @if (_loading) {
     <div class="loading">Loading fight statistics...</div>

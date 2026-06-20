@@ -26,7 +26,7 @@
     "ngx-bootstrap": "^21.2.1",
     "ngx-select-ex": "^19.0.7",
     "rxjs": "7.8.2",
-    "serialize-javascript": "3.1.0",
+    "serialize-javascript": "7.0.6",
     "tslib": "2.0.0",
     "zone.js": "0.15.0"
   },

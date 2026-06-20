@@ -27,7 +27,7 @@ export class SearchPlayerComponent implements OnInit, OnDestroy {
   private readonly unsubscribe$ = new Subject<void>();
 
   protected readonly charNameText$ = new Subject<string>();
-  protected readonly charNameSelected = new FormControl<Player['guid']>(null);
+  protected readonly charNameSelected = new FormControl<Player['guid'] | null>(null);
   protected readonly charList = toSignal(
     this.charNameText$.pipe(
       debounceTime(500),

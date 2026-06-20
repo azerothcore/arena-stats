@@ -58,7 +58,7 @@ describe('ArenaTeamService', () => {
       },
     ];
 
-    mockDataTeams = service['processTeams'](mockDataTeams);
+    mockDataTeams = service['processTeams'](mockDataTeams)!;
 
     expect(mockDataTeams[0].faction).toBe('horde');
     expect(mockDataTeams[0].rank).toBe(10);
@@ -66,7 +66,7 @@ describe('ArenaTeamService', () => {
     mockDataTeams[0].captainRace = 1;
     mockDataTeams[0].rank = 0;
 
-    mockDataTeams = service['processTeams'](mockDataTeams);
+    mockDataTeams = service['processTeams'](mockDataTeams)!;
 
     expect(mockDataTeams[0].faction).toBe('alliance');
     expect(mockDataTeams[0].rank).toBe(9999);

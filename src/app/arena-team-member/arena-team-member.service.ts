@@ -15,9 +15,9 @@ export class ArenaTeamMemberService {
   private readonly http: HttpClient = inject(HttpClient);
   private readonly router: Router = inject(Router);
 
-  teamDetails$: Observable<ArenaTeam>;
-  members$: Observable<ArenaTeamMember[]>;
-  private arenaTeamId: number;
+  teamDetails$!: Observable<ArenaTeam>;
+  members$!: Observable<ArenaTeamMember[]>;
+  private arenaTeamId!: string | number | null;
 
   goBack(): void {
     this.router.navigate(['/']);
@@ -57,7 +57,7 @@ export class ArenaTeamMemberService {
     );
   }
 
-  init(routeParam): void {
+  init(routeParam: string | number | null): void {
     this.arenaTeamId = routeParam;
     this.loadTeamDetail();
     this.loadTeamMemberDetail();

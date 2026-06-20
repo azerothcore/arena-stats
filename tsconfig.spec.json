@@ -1,18 +1,12 @@
 {
   "extends": "./tsconfig.json",
+  "angularCompilerOptions": {
+    "strictTemplates": false
+  },
   "compilerOptions": {
     "outDir": "./out-tsc/spec",
-    "typeRoots": [
-      "node_modules/@types",
-      "node_modules"
-    ],
-    "types": [
-      "vitest/globals",
-      "node"
-    ]
+    "typeRoots": ["node_modules/@types", "node_modules"],
+    "types": ["vitest/globals", "node"]
   },
-  "include": [
-    "src/**/*.spec.ts",
-    "src/**/*.d.ts"
-  ]
+  "include": ["src/**/*.spec.ts", "src/**/*.d.ts"]
 }

@@ -1,6 +1,6 @@
 import { enableProdMode, provideZoneChangeDetection } from '@angular/core';
 
-import { provideHttpClient, withInterceptors } from '@angular/common/http';
+import { provideHttpClient, withInterceptors, withXhr } from '@angular/common/http';
 import { bootstrapApplication } from '@angular/platform-browser';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { provideRouter, withHashLocation } from '@angular/router';
@@ -16,7 +16,7 @@ if (environment.production) {
 bootstrapApplication(AppComponent, {
   providers: [
     provideZoneChangeDetection(),
-    provideHttpClient(withInterceptors([httpCacheInterceptor])),
+    provideHttpClient(withXhr(), withInterceptors([httpCacheInterceptor])),
     provideRouter(routes, withHashLocation()),
     provideAnimations(),
   ],

@@ -36,7 +36,7 @@ export class ArenaTeamComponent implements AfterViewInit {
     { tabName: '3v3', arenaType: 3 },
     ENABLE_3V3_SOLO_QUEUE ? { tabName: '3v3soloQ', arenaType: ARENA_TYPE_3v3_SOLO_QUEUE, solo: true } : {},
     { tabName: '5v5', arenaType: 5 },
-  ].filter((t) => t.hasOwnProperty('tabName'));
+  ].filter((t): t is { tabName: string; arenaType: number; solo?: boolean } => t.hasOwnProperty('tabName'));
   private readonly LAST_TAB_KEY = this.teams[0].tabName;
 
   protected readonly afterViewInit = signal(false);

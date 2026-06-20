@@ -1,36 +1,37 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { ActivatedRoute, convertToParamMap } from '@angular/router';
+import { ComponentFixture, TestBed } from "@angular/core/testing";
+import { ActivatedRoute, convertToParamMap } from "@angular/router";
 
-import { provideHttpClient, withInterceptorsFromDi, withXhr } from '@angular/common/http';
-import { RouterTestingModule } from '@angular/router/testing';
-import { of } from 'rxjs';
-import { ArenaTeamMemberComponent } from './arena-team-member.component';
-import { ArenaTeamMemberService } from './arena-team-member.service';
+import { provideHttpClient, withInterceptorsFromDi } from "@angular/common/http";
+import { RouterTestingModule } from "@angular/router/testing";
+import { of } from "rxjs";
+import { ArenaTeamMemberComponent } from "./arena-team-member.component";
+import { ArenaTeamMemberService } from "./arena-team-member.service";
 
-describe('ArenaTeamMemberComponent', () => {
+describe("ArenaTeamMemberComponent", () => {
   let component: ArenaTeamMemberComponent;
   let fixture: ComponentFixture<ArenaTeamMemberComponent>;
 
-  beforeEach(waitForAsync(() => {
-    TestBed.configureTestingModule({
-      imports: [RouterTestingModule, ArenaTeamMemberComponent],
-      providers: [
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+    imports: [RouterTestingModule,
+        ArenaTeamMemberComponent],
+    providers: [
         {
-          provide: ActivatedRoute,
-          useValue: { paramMap: of(convertToParamMap({ id: 1 })) },
+            provide: ActivatedRoute,
+            useValue: { paramMap: of(convertToParamMap({ id: 1 })) },
         },
-        provideHttpClient(withXhr(), withInterceptorsFromDi()),
-      ],
-    }).compileComponents();
-  }));
+        provideHttpClient(withInterceptorsFromDi()),
+    ]
+}).compileComponents();
+  });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(ArenaTeamMemberComponent);
     component = fixture.componentInstance;
   });
 
-  it('ngOinit should work correctly', () => {
-    const initSpy = spyOn(TestBed.inject(ArenaTeamMemberService), 'init');
+  it("ngOinit should work correctly", () => {
+    const initSpy = vi.spyOn(TestBed.inject(ArenaTeamMemberService), "init").mockImplementation(() => {});
 
     fixture.detectChanges();
 

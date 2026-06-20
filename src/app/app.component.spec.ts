@@ -1,16 +1,16 @@
-import { provideHttpClient, withInterceptorsFromDi, withXhr } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
-import { TestBed, waitForAsync } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
 import { AppComponent } from './app.component';
 import { provideAnimations } from '@angular/platform-browser/animations';
 
 describe('AppComponent', () => {
-  beforeEach(waitForAsync(() => {
-    TestBed.configureTestingModule({
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
       imports: [AppComponent],
-      providers: [provideHttpClient(withXhr(), withInterceptorsFromDi()), provideHttpClientTesting(), provideAnimations()],
+      providers: [provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting(), provideAnimations()],
     }).compileComponents();
-  }));
+  });
 
   it('onInit should work correctly', () => {
     const fixture = TestBed.createComponent(AppComponent);

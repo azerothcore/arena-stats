@@ -1,4 +1,5 @@
 {
+  "extends": "./tsconfig.json",
   "angularCompilerOptions": {
     "strictTemplates": false
   },
@@ -6,8 +7,7 @@
     "outDir": "./out-tsc/app",
     "types": []
   },
-  "exclude": ["src/test.ts", "src/**/*.spec.ts"],
-  "extends": "./tsconfig.json",
-  "files": ["src/main.ts", "src/polyfills.ts"],
-  "include": ["src/**/*.d.ts"]
+  "files": ["src/main.ts"],
+  "include": ["src/**/*.d.ts"],
+  "exclude": ["src/**/*.spec.ts"]
 }

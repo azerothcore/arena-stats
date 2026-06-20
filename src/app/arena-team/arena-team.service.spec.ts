@@ -1,5 +1,5 @@
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
-import { TestBed, getTestBed, waitForAsync } from '@angular/core/testing';
+import { TestBed, getTestBed } from '@angular/core/testing';
 import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { TabsModule } from 'ngx-bootstrap/tabs';
@@ -8,26 +8,22 @@ import { API_URL } from 'config';
 import { ArenaTeam } from '../types/arena-team.type';
 import { ArenaTeamComponent } from './arena-team.component';
 import { ArenaTeamService } from './arena-team.service';
-import { provideHttpClient, withInterceptorsFromDi, withXhr } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('ArenaTeamService', () => {
   let httpMock: HttpTestingController;
   let injector: TestBed;
-  const router = { navigate: jasmine.createSpy('navigate') };
+  const router = { navigate: vi.fn() };
 
-  beforeEach(waitForAsync(() => {
-    TestBed.configureTestingModule({
-      imports: [TabsModule, RouterTestingModule, ArenaTeamComponent],
-      providers: [
-        { provide: Router, useValue: router },
-        provideHttpClient(withXhr(), withInterceptorsFromDi()),
-        provideHttpClientTesting(),
-      ],
-    }).compileComponents();
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+    imports: [TabsModule, RouterTestingModule, ArenaTeamComponent],
+    providers: [{ provide: Router, useValue: router }, provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
+}).compileComponents();
 
     injector = getTestBed();
     httpMock = injector.inject(HttpTestingController);
-  }));
+  });
 
   afterEach(() => {
     httpMock.verify();

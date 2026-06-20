@@ -17,7 +17,7 @@ describe("AppService", () => {
 }).compileComponents();
 
     injector = getTestBed();
-    httpMock = injector.get(HttpTestingController);
+    httpMock = injector.inject(HttpTestingController);
   }));
 
   afterEach(() => {
@@ -25,7 +25,7 @@ describe("AppService", () => {
   });
 
   it("should load arena time dist. and get arena time dist correctly works", () => {
-    const service: AppService = TestBed.get(AppService);
+    const service: AppService = TestBed.inject(AppService);
     const mockData: Worldstate[] = [
       {
         entry: 20001,

@@ -5,7 +5,7 @@
   },
   "compileOnSave": false,
   "compilerOptions": {
-    "strict": false,
+    "strict": true,
     "paths": {
       "config": ["./config"]
     },

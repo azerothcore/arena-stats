@@ -17,5 +17,5 @@ export function getNextArenaPoints(rating: ArenaTeamMember['personalRating'], ty
     ARENA_POINTS_BASE = 1511.26 / (1.0 + 1639.28 * Math.exp(-0.00412 * rating));
   }
 
-  return Math.round(ARENA_POINTS_BASE * ArenaPointsMultiplier[keyMultiplier]);
+  return Math.round(ARENA_POINTS_BASE * ArenaPointsMultiplier[keyMultiplier as keyof typeof ArenaPointsMultiplier]);
 }

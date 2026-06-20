@@ -25,7 +25,7 @@ export class ArenaTeamService {
     [ArenaTypes.ARENA_TYPE_5v5]: this.assignTeamData(ArenaTypes.ARENA_TYPE_5v5),
   };
 
-  private processTeams(teams: ArenaTeam[]): ArenaTeam[] {
+  private processTeams(teams: ArenaTeam[]): ArenaTeam[] | undefined {
     if (!teams) {
       return;
     }
@@ -55,7 +55,7 @@ export class ArenaTeamService {
     return this.http
       .get<ArenaTeam[]>(API_URL + "/characters/arena_team/type/" + arenaType)
       .pipe(
-        map((data) => this.processTeams(data)),
+        map((data) => this.processTeams(data) ?? []),
         shareReplay()
       );
   }

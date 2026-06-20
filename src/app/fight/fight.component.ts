@@ -16,7 +16,7 @@ import { getFaction } from '../utils/get-faction';
   selector: 'app-fight',
   templateUrl: './fight.component.html',
   styleUrls: ['./fight.component.scss'],
-  changeDetection: ChangeDetectionStrategy.Eager,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [DatePipe, PlayerIconComponent, PopoverModule],
 })
 export class FightComponent {
@@ -31,16 +31,20 @@ export class FightComponent {
   protected readonly getFaction = getFaction;
 
   protected readonly fightStats = signal<FightStats | null>(null);
-  protected readonly winnerMembers = computed(() =>
-    this.fightStats()
-      .memberStats.filter((m) => m.team === this.fightStats().fight.winner)
-      .map((m) => ({ ...m, win: true })),
-  );
-  protected readonly loserMembers = computed(() =>
-    this.fightStats()
-      .memberStats.filter((m) => m.team === this.fightStats().fight.loser)
-      .map((m) => ({ ...m, win: false })),
-  );
+  protected readonly winnerMembers = computed(() => {
+    const stats = this.fightStats();
+    if (!stats) {
+      return [];
+    }
+    return stats.memberStats.filter((m) => m.team === stats.fight.winner).map((m) => ({ ...m, win: true }));
+  });
+  protected readonly loserMembers = computed(() => {
+    const stats = this.fightStats();
+    if (!stats) {
+      return [];
+    }
+    return stats.memberStats.filter((m) => m.team === stats.fight.loser).map((m) => ({ ...m, win: false }));
+  });
 
   private readonly fightId = toSignal(this.route.paramMap.pipe(map((p) => p.get('id'))));
 

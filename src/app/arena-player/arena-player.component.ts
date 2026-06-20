@@ -31,8 +31,8 @@ export class ArenaPlayerComponent implements OnInit, OnDestroy {
   private readonly unsubscribe$ = new Subject<void>();
   protected readonly ARENA_TYPE_3v3_SOLO_QUEUE = ARENA_TYPE_3v3_SOLO_QUEUE;
 
-  protected player: Player;
-  protected playerArenaTeams: any[];
+  protected player?: Player;
+  protected playerArenaTeams: any[] = [];
 
   protected goBack(): void {
     this.router.navigate(['/']);
@@ -49,7 +49,7 @@ export class ArenaPlayerComponent implements OnInit, OnDestroy {
       )
       .subscribe(({ playerData, arenaTeamsData, characterArenaStats }) => {
         this.player = playerData;
-        const arenaStatsPerType = {};
+        const arenaStatsPerType: { [key: number]: any } = {};
         for (const charArenaStat of characterArenaStats) {
           const arenaType = this.getArenaTypeBySlot(charArenaStat.slot);
           arenaStatsPerType[arenaType] = charArenaStat;
@@ -74,7 +74,7 @@ export class ArenaPlayerComponent implements OnInit, OnDestroy {
   }
 
   private getArenaTypeBySlot(slot: number): ArenaTypes {
-    const arenaTypeBySlot = {
+    const arenaTypeBySlot: { [key: number]: ArenaTypes } = {
       0: ArenaTypes.ARENA_TYPE_2v2,
       1: ArenaTypes.ARENA_TYPE_3v3,
       2: ArenaTypes.ARENA_TYPE_5v5,

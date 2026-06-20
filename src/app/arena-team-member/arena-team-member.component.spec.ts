@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
+import { ComponentFixture, TestBed } from "@angular/core/testing";
 import { ActivatedRoute, convertToParamMap } from "@angular/router";
 
 import { provideHttpClient, withInterceptorsFromDi } from "@angular/common/http";
@@ -11,8 +11,8 @@ describe("ArenaTeamMemberComponent", () => {
   let component: ArenaTeamMemberComponent;
   let fixture: ComponentFixture<ArenaTeamMemberComponent>;
 
-  beforeEach(waitForAsync(() => {
-    TestBed.configureTestingModule({
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
     imports: [RouterTestingModule,
         ArenaTeamMemberComponent],
     providers: [
@@ -23,7 +23,7 @@ describe("ArenaTeamMemberComponent", () => {
         provideHttpClient(withInterceptorsFromDi()),
     ]
 }).compileComponents();
-  }));
+  });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(ArenaTeamMemberComponent);
@@ -31,7 +31,7 @@ describe("ArenaTeamMemberComponent", () => {
   });
 
   it("ngOinit should work correctly", () => {
-    const initSpy = spyOn(TestBed.inject(ArenaTeamMemberService), "init");
+    const initSpy = vi.spyOn(TestBed.inject(ArenaTeamMemberService), "init").mockImplementation(() => {});
 
     fixture.detectChanges();
 

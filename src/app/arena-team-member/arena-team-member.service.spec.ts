@@ -1,9 +1,8 @@
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
-import { TestBed, getTestBed, waitForAsync } from '@angular/core/testing';
+import { TestBed, getTestBed } from '@angular/core/testing';
 import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { TabsModule } from 'ngx-bootstrap/tabs';
-import Spy = jasmine.Spy;
 
 import { API_URL } from 'config';
 import { ArenaTeamMember } from '../types/arena-team-member.type';
@@ -16,17 +15,17 @@ import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http'
 describe('ArenaTeamMemberService', () => {
   let httpMock: HttpTestingController;
   let injector: TestBed;
-  const router = { navigate: jasmine.createSpy('navigate') };
+  const router = { navigate: vi.fn() };
 
-  beforeEach(waitForAsync(() => {
-    TestBed.configureTestingModule({
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
     imports: [TabsModule, RouterTestingModule, ArenaTeamMemberComponent],
     providers: [{ provide: Router, useValue: router }, provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
 }).compileComponents();
 
     injector = getTestBed();
     httpMock = injector.inject(HttpTestingController);
-  }));
+  });
 
   afterEach(() => {
     httpMock.verify();
@@ -105,8 +104,8 @@ describe('ArenaTeamMemberService', () => {
 
   it('init() should work correctly', () => {
     const service: ArenaTeamMemberService = TestBed.inject(ArenaTeamMemberService);
-    const loadTeamDetailSpy: Spy = spyOn<any>(service, 'loadTeamDetail');
-    const loadTeamMemberDetailSpy: Spy = spyOn<any>(service, 'loadTeamMemberDetail');
+    const loadTeamDetailSpy = vi.spyOn(service as any, 'loadTeamDetail').mockImplementation(() => {});
+    const loadTeamMemberDetailSpy = vi.spyOn(service as any, 'loadTeamMemberDetail').mockImplementation(() => {});
     const param = 1;
 
     service.init(param);

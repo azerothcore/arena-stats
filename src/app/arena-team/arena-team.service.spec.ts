@@ -1,5 +1,5 @@
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
-import { TestBed, getTestBed, waitForAsync } from '@angular/core/testing';
+import { TestBed, getTestBed } from '@angular/core/testing';
 import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { TabsModule } from 'ngx-bootstrap/tabs';
@@ -13,17 +13,17 @@ import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http'
 describe('ArenaTeamService', () => {
   let httpMock: HttpTestingController;
   let injector: TestBed;
-  const router = { navigate: jasmine.createSpy('navigate') };
+  const router = { navigate: vi.fn() };
 
-  beforeEach(waitForAsync(() => {
-    TestBed.configureTestingModule({
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
     imports: [TabsModule, RouterTestingModule, ArenaTeamComponent],
     providers: [{ provide: Router, useValue: router }, provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
 }).compileComponents();
 
     injector = getTestBed();
     httpMock = injector.inject(HttpTestingController);
-  }));
+  });
 
   afterEach(() => {
     httpMock.verify();

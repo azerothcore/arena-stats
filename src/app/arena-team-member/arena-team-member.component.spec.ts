@@ -31,7 +31,7 @@ describe("ArenaTeamMemberComponent", () => {
   });
 
   it("ngOinit should work correctly", () => {
-    const initSpy = spyOn(TestBed.get(ArenaTeamMemberService), "init");
+    const initSpy = spyOn(TestBed.inject(ArenaTeamMemberService), "init");
 
     fixture.detectChanges();
 

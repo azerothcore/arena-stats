@@ -22,7 +22,7 @@ export class ArenaTeamMemberComponent implements OnInit {
   private readonly route: ActivatedRoute = inject(ActivatedRoute);
   private readonly router: Router = inject(Router);
 
-  private readonly destroy$ = new Subject();
+  private readonly destroy$ = new Subject<void>();
 
   protected readonly ARENA_TYPE_1v1 = ARENA_TYPE_1v1;
   protected readonly ARENA_TYPE_3v3_SOLO_QUEUE = ARENA_TYPE_3v3_SOLO_QUEUE;

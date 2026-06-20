@@ -13,7 +13,7 @@ describe('ArenaTeamComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [TabsModule.forRoot(), RouterTestingModule, ArenaTeamComponent],
+      imports: [TabsModule, RouterTestingModule, ArenaTeamComponent],
       providers: [provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting(), provideAnimations()],
     }).compileComponents();
   }));

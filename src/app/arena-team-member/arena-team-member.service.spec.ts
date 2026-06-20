@@ -20,12 +20,12 @@ describe('ArenaTeamMemberService', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-    imports: [TabsModule.forRoot(), RouterTestingModule, ArenaTeamMemberComponent],
+    imports: [TabsModule, RouterTestingModule, ArenaTeamMemberComponent],
     providers: [{ provide: Router, useValue: router }, provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
 }).compileComponents();
 
     injector = getTestBed();
-    httpMock = injector.get(HttpTestingController);
+    httpMock = injector.inject(HttpTestingController);
   }));
 
   afterEach(() => {
@@ -33,7 +33,7 @@ describe('ArenaTeamMemberService', () => {
   });
 
   it('loadTeamDetail() should work correctly', () => {
-    const service: ArenaTeamMemberService = TestBed.get(ArenaTeamMemberService);
+    const service: ArenaTeamMemberService = TestBed.inject(ArenaTeamMemberService);
     const mockData: ArenaTeam[] = [
       {
         captainName: 'Helias',
@@ -75,7 +75,7 @@ describe('ArenaTeamMemberService', () => {
   });
 
   it('loadTeamMemberDetail() should work correctly', () => {
-    const service: ArenaTeamMemberService = TestBed.get(ArenaTeamMemberService);
+    const service: ArenaTeamMemberService = TestBed.inject(ArenaTeamMemberService);
     const mockData: ArenaTeamMember[] = [
       {
         arenaTeamId: 1,
@@ -104,7 +104,7 @@ describe('ArenaTeamMemberService', () => {
   });
 
   it('init() should work correctly', () => {
-    const service: ArenaTeamMemberService = TestBed.get(ArenaTeamMemberService);
+    const service: ArenaTeamMemberService = TestBed.inject(ArenaTeamMemberService);
     const loadTeamDetailSpy: Spy = spyOn<any>(service, 'loadTeamDetail');
     const loadTeamMemberDetailSpy: Spy = spyOn<any>(service, 'loadTeamMemberDetail');
     const param = 1;
@@ -117,7 +117,7 @@ describe('ArenaTeamMemberService', () => {
   });
 
   it('goBack() should work correctly', () => {
-    const service: ArenaTeamMemberService = TestBed.get(ArenaTeamMemberService);
+    const service: ArenaTeamMemberService = TestBed.inject(ArenaTeamMemberService);
     service.goBack();
     expect(router.navigate).toHaveBeenCalledWith(['/']);
   });

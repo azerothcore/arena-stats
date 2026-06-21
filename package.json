@@ -21,7 +21,7 @@
     "@angular/router": "22.0.2",
     "@fortawesome/fontawesome-free": "6.7.1",
     "bootstrap": "5.3.8",
-    "bootswatch": "5.3.3",
+    "bootswatch": "5.3.8",
     "lodash.isequal": "4.5.0",
     "ngx-bootstrap": "^21.2.1",
     "ngx-select-ex": "^19.0.7",

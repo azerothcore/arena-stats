@@ -10,3 +10,10 @@ export const ArenaPointsMultiplier = {
   t3v3soloQ: 0.80,
   t5v5: 1,
 };
+
+// Arena.ArenaWinRatingModifier1, Arena.ArenaWinRatingModifier2 and Arena.ArenaLoseRatingModifier from worldserver.conf
+export const ArenaRatingModifiers = {
+  winRatingModifier1: 48,
+  winRatingModifier2: 24,
+  loseRatingModifier: 24,
+};

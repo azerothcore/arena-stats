@@ -39,3 +39,35 @@ table tr:hover {
     transform: rotate(180deg);
   }
 }
+
+.rating-formula-popover {
+  --bs-popover-font-size: 1rem;
+  --bs-popover-max-width: min(560px, calc(100% - 32px));
+  --bs-popover-header-font-size: 1.1rem;
+
+  .popover-body {
+    padding: 0;
+  }
+
+  .popover-header {
+    color: #212529;
+  }
+
+  .rating-formula-content {
+    padding: var(--bs-popover-body-padding-y) var(--bs-popover-body-padding-x);
+  }
+
+  .formula-step {
+    margin-bottom: 0.5rem;
+  }
+
+  code {
+    display: block;
+    margin: 0.25rem 0;
+    font-size: 1.05em;
+  }
+
+  sup {
+    font-size: 0.85em;
+  }
+}

@@ -1,23 +1,24 @@
-import { DatePipe } from '@angular/common';
+import { DatePipe, DecimalPipe, NgTemplateOutlet } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Component, computed, DestroyRef, effect, inject, signal, ChangeDetectionStrategy } from '@angular/core';
 import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, Router } from '@angular/router';
 import { API_URL } from 'config';
-import { PopoverModule } from 'ngx-bootstrap/popover';
+import { PopoverDirective, PopoverModule } from 'ngx-bootstrap/popover';
 import { map } from 'rxjs/operators';
 import { ArenaTeamMemberService } from '../arena-team-member/arena-team-member.service';
 import { PlayerIconComponent } from '../player-icons/player-icons.component';
 import { FightStats } from '../types/fight-stats.interface';
 import { ARENA_TYPE_1v1, ARENA_TYPE_3v3_SOLO_QUEUE } from '../utils/arena-type';
 import { getFaction } from '../utils/get-faction';
+import { getRatingChange } from '../utils/get-rating-change';
 
 @Component({
   selector: 'app-fight',
   templateUrl: './fight.component.html',
   styleUrls: ['./fight.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [DatePipe, PlayerIconComponent, PopoverModule],
+  imports: [DatePipe, DecimalPipe, NgTemplateOutlet, PlayerIconComponent, PopoverModule],
 })
 export class FightComponent {
   private readonly route = inject(ActivatedRoute);
@@ -46,12 +47,28 @@ export class FightComponent {
     return stats.memberStats.filter((m) => m.team === stats.fight.loser).map((m) => ({ ...m, win: false }));
   });
 
+  protected readonly ratingChanges = computed(() => {
+    const fight = this.fightStats()?.fight;
+    if (!fight) {
+      return null;
+    }
+    return {
+      winner: getRatingChange(fight.winner_tr, fight.loser_mmr, true, fight.winner_tr_change),
+      loser: getRatingChange(fight.loser_tr, fight.winner_mmr, false, fight.loser_tr_change),
+    };
+  });
+
   private readonly fightId = toSignal(this.route.paramMap.pipe(map((p) => p.get('id'))));
 
   protected readonly loading = signal(true);
   protected readonly error = signal<string | null>(null);
 
+  private openFormula: PopoverDirective | null = null;
+  private hideFormulaTimeout?: ReturnType<typeof setTimeout>;
+
   constructor() {
+    this.destroyRef.onDestroy(() => clearTimeout(this.hideFormulaTimeout));
+
     effect(() => {
       const fightId = this.fightId();
       if (fightId) {
@@ -90,6 +107,24 @@ export class FightComponent {
     const minutes = Math.floor(seconds / 60);
     const remainingSeconds = seconds % 60;
     return `${minutes}m ${remainingSeconds}s`;
+  }
+
+  protected showFormula(popover: PopoverDirective): void {
+    clearTimeout(this.hideFormulaTimeout);
+    if (this.openFormula !== popover) {
+      this.openFormula?.hide();
+      this.openFormula = popover;
+    }
+    popover.show();
+  }
+
+  // The delay lets the cursor cross the gap between the icon and the popover without closing it
+  protected hideFormulaSoon(popover: PopoverDirective): void {
+    clearTimeout(this.hideFormulaTimeout);
+    this.hideFormulaTimeout = setTimeout(() => {
+      popover.hide();
+      this.openFormula = null;
+    }, 200);
   }
 
   protected goToFight(fight_id: number): void {

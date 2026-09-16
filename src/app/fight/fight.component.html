@@ -128,11 +128,13 @@
               <td [class]="_fightStats.fight.winner_faction">{{ _fightStats.fight.winner_mmr }}</td>
               <td [class]="_fightStats.fight.winner_tr_change > 0 ? 'text-success' : 'text-danger'">
                 {{ _fightStats.fight.winner_tr_change > 0 ? '+' : '' }}{{ _fightStats.fight.winner_tr_change }}
+                <ng-container *ngTemplateOutlet="ratingFormulaIcon; context: { $implicit: ratingChanges()?.winner }" />
               </td>
               <td [class]="_fightStats.fight.loser_faction">{{ _fightStats.fight.loser_tr }}</td>
               <td [class]="_fightStats.fight.loser_faction">{{ _fightStats.fight.loser_mmr }}</td>
               <td [class]="_fightStats.fight.loser_tr_change > 0 ? 'text-success' : 'text-danger'">
                 {{ _fightStats.fight.loser_tr_change > 0 ? '+' : '' }}{{ _fightStats.fight.loser_tr_change }}
+                <ng-container *ngTemplateOutlet="ratingFormulaIcon; context: { $implicit: ratingChanges()?.loser }" />
               </td>
             </tr>
           </tbody>
@@ -184,3 +186,64 @@
     </div>
   }
 </div>
+
+<ng-template #ratingFormulaIcon let-breakdown>
+  @if (breakdown) {
+    <i
+      class="fas fa-info-circle text-white ms-2 rating-formula-icon"
+      tabindex="0"
+      role="button"
+      aria-label="How the team rating change is calculated"
+      #formulaPopover="bs-popover"
+      [popover]="ratingFormula"
+      [popoverContext]="{ $implicit: breakdown, popover: formulaPopover }"
+      containerClass="rating-formula-popover"
+      container="body"
+      boundariesElement="viewport"
+      triggers=""
+      (mouseenter)="showFormula(formulaPopover)"
+      (mouseleave)="hideFormulaSoon(formulaPopover)"
+      (focus)="showFormula(formulaPopover)"
+      (blur)="formulaPopover.hide()"
+    ></i>
+  }
+</ng-template>
+
+<ng-template #ratingFormula let-b let-popover="popover">
+  @let p = b.winChance | number: '1.3-3';
+  @let q = 1 - b.winChance | number: '1.3-3';
+  @let k = b.kFactor | number: '1.0-2';
+  <!-- The title lives in here instead of [popoverTitle] so hovering it also keeps the popover open -->
+  <div (mouseenter)="showFormula(popover)" (mouseleave)="hideFormulaSoon(popover)">
+    <h3 class="popover-header">{{ b.won ? 'Winner team rating change' : 'Loser team rating change' }}</h3>
+    <div class="rating-formula-content">
+      <p class="mb-2">The more likely a team was to win, the less rating it gains when winning and the more it loses when losing.</p>
+      <div class="formula-step">
+        <strong>1. Win chance</strong> (P), from the team rating against the opponent MMR, both before the match:
+        <code>P = 1 / (1 + 10<sup>(opponent MMR − team rating) / 650</sup>)</code>
+        <code
+          >P = 1 / (1 + 10<sup>({{ b.opponentMmr }} − {{ b.ownRating }}) / 650</sup>) = {{ p }}</code
+        >
+      </div>
+      <div class="formula-step">
+        <strong>2. Modifier</strong> (K): <code>K = {{ k }}</code>
+        <small class="text-muted">({{ b.kFactorExplanation }})</small>
+      </div>
+      <div class="formula-step">
+        <strong>3. Rating change</strong>, rounded up:
+        @if (b.won) {
+          <code>change = ⌈K × (1 − P)⌉</code>
+          <code>⌈{{ k }} × {{ q }}⌉ = ⌈{{ b.rawChange | number: '1.2-2' }}⌉ = +{{ b.expectedChange }}</code>
+        } @else {
+          <code>change = ⌈−K × P⌉</code>
+          <code>⌈−{{ k }} × {{ p }}⌉ = ⌈{{ b.rawChange | number: '1.2-2' }}⌉ = {{ b.expectedChange }}</code>
+        }
+      </div>
+      @if (b.expectedChange !== b.recordedChange) {
+        <div class="alert alert-warning p-2 mt-2 mb-0">
+          The server recorded {{ b.recordedChange }} instead. This happens when the match didn't count for rating, e.g. it ended too soon.
+        </div>
+      }
+    </div>
+  </div>
+</ng-template>

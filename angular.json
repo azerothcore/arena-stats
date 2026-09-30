@@ -25,22 +25,25 @@
             "tsConfig": "tsconfig.app.json",
             "assets": ["src/favicon.ico", "src/assets"],
             "styles": [
-              "./node_modules/bootstrap/dist/css/bootstrap.min.css",
-              "./node_modules/bootswatch/dist/cyborg/_variables.scss",
-              "./node_modules/bootstrap/scss/bootstrap.scss",
               "./node_modules/bootswatch/dist/cyborg/bootstrap.min.css",
-              "./node_modules/@fortawesome/fontawesome-free/scss/fontawesome.scss",
-              "./node_modules/@fortawesome/fontawesome-free/scss/solid.scss",
-              "./node_modules/@fortawesome/fontawesome-free/scss/regular.scss",
-              "./node_modules/@fortawesome/fontawesome-free/scss/brands.scss",
+              "./node_modules/@fortawesome/fontawesome-free/css/fontawesome.min.css",
+              "./node_modules/@fortawesome/fontawesome-free/css/solid.min.css",
+              "./node_modules/@fortawesome/fontawesome-free/css/regular.min.css",
+              "./node_modules/@fortawesome/fontawesome-free/css/brands.min.css",
               "src/styles.scss"
             ],
             "scripts": [],
             "stylePreprocessorOptions": {
               "sass": {
-                "silenceDeprecations": ["color-functions", "global-builtin", "import"]
+                "fatalDeprecations": [
+                  "call-string", "elseif", "moz-document", "new-global", "color-module-compat", "slash-div",
+                  "bogus-combinators", "strict-unary", "function-units", "duplicate-var-flags", "abs-percent",
+                  "feature-exists", "color-4-api", "color-functions", "import", "global-builtin", "misplaced-rest",
+                  "with-private", "if-function", "function-name"
+                ]
               }
             },
+            "allowedCommonJsDependencies": ["lodash.isequal"],
             "extractLicenses": false,
             "sourceMap": true,
             "optimization": false,
